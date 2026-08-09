@@ -6,7 +6,7 @@
 
 | 计划 | 分支 | 负责人 | 状态 | 模式 | 进度 | 下一步 |
 |---|---|---|---|---|---:|---|
-| [[plans/codex-omo-independent-app]] | `codex/omo-independent-app` | Codex `/root` | `in_progress` | `auto` | 98% | 补齐端到端无死路用户旅程验收并发布外部 TestFlight 构建 |
+| [[plans/codex-omo-independent-app]] | `codex/omo-independent-app` | Codex `/root` | `in_progress` | `auto` | 99% | build 3 已提交外部 Beta App Review，等待 Apple 审核结果 |
 
 ## 使用规则
 

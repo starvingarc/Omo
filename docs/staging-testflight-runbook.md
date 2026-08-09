@@ -130,5 +130,7 @@ API 私钥不得提交到 Git；只保存在本机安全凭据存储。
 - 当前独立 Bundle `com.maxhan.omo` 已实际执行全部 Simulator XCTest：49 通过、0 失败、0 跳过；其中包含 5 条核心交互 UI Test。
 - 新 Omo App Store Connect App ID 为 `6799407458`；独立 build 1（Build ID `7bb306b6-dc29-43ca-9547-782ae6fa2009`）状态为 `VALID`。
 - 核心交互修复使用独立 build 2（Build ID `a387a603-dc77-4dda-b0a3-862e1d490936`）：Archive、App Store 导出、包内 Bundle / 版本 / staging 地址、正式签名均已校验，App Store Connect 状态为 `VALID` / `IN_BETA_TESTING`。
+- 无死路用户旅程修复使用独立 build 3（Build ID `6d6b0830-3c29-42ce-9858-91385ebaffbb`）：Debug / Release 各 52 项测试通过，真实 staging 首次上传、杀 App 恢复、生成、刮开、自评和知识库确认已通过；IPA 正式签名与外部 Beta entitlement 已校验。
+- build 3 已加入外部组 `Omo`（ID `7332a271-6d86-486e-a43b-1d208a3d1809`）并提交 Beta App Review，当前为 `WAITING_FOR_BETA_REVIEW`；公开链接为 `https://testflight.apple.com/join/rZ8pBE7e`。
 - 独立内部组 ID 为 `109f9f4f-75b9-4419-be1f-46edd4bc016a`；build 2 已加入该组并开启自动通知，组内当前一名 Omo 测试员状态为 `INSTALLED`。不得复用旧 App 记录、旧测试组或旧测试员。
 - 隐私政策与支持页已分别托管在 `/privacy` 和 `/support`；兼容地址 `/privacy-policy.html` 亦可用。

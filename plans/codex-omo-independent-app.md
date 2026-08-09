@@ -26,6 +26,7 @@
 - 提供的真实截图已通过系统照片选择器进入 Omo staging；同一自动化旅程完成首次许可、处理中杀 App、恢复、生成、刮开、自评和知识库确认。
 - 提供的真实截图已在 staging 成功生成卡片；另一次真实 App 上传遇到模型超时后进入明确失败态，同 ID 重试、入口可用和杀 App 恢复均已验证。
 - 独立 Omo `1.0 (3)` 已完成 Release Archive 与包审计；导出配置已从 internal-only 改为可外部 Beta Review，并新增回归门禁。
+- build 3 已上传并处理为 `VALID`，已加入独立外部组并提交 Beta App Review；当前 `externalBuildState=WAITING_FOR_BETA_REVIEW`，公开链接等待 Apple 批准后开放安装。
 - Share Extension 的首次 AI 授权跳转仍属于 PRD 第 17 节待产品确认边界，不在本次 P0 首页死锁修复中伪实现。
 
 ## 阻塞与解除条件（2026-08-09）

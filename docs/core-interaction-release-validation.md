@@ -3,6 +3,7 @@
 - 日期：2026-08-09
 - 分支：`codex/omo-independent-app`
 - App：Omo `1.0 (3)`，Bundle ID `com.maxhan.omo`
+- TestFlight Build ID：`6d6b0830-3c29-42ce-9858-91385ebaffbb`
 - TestFlight 目标：独立 Omo 外部测试组 `Omo`
 - staging：`https://omo-api-staging-staging.up.railway.app`
 
@@ -47,8 +48,10 @@
 ## Release 与 TestFlight
 
 - build 3 Archive 包内 Bundle ID 为 `com.maxhan.omo`，版本为 `1.0 (3)`，API 地址只指向 Omo staging。
+- IPA 使用 Apple Distribution 正式签名，`TeamIdentifier=44589Y6FA6`、`get-task-allow=false`、`beta-reports-active=true`；包内没有测试夹具或本地地址回退。
 - `testFlightInternalTestingOnly=false` 已写入导出配置并由自动化门禁保护，构建可送交 Beta App Review；该配置不会发布 App Store 正式版。
 - 外部测试组 `Omo` 使用独立 Omo App 记录，公开链接为 <https://testflight.apple.com/join/rZ8pBE7e>；从未使用 Recallo App 或测试组。
+- build 3 已处理为 `VALID`，已加入外部组并提交 Beta App Review；当前状态为 `WAITING_FOR_REVIEW / WAITING_FOR_BETA_REVIEW`。Apple 批准前公开链接尚不能安装该构建。
 
 ## 尚需人工确认
 
