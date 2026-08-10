@@ -7,7 +7,7 @@
 | 计划 | 分支 | 负责人 | 状态 | 模式 | 进度 | 下一步 |
 |---|---|---|---|---|---:|---|
 | [[plans/codex-omo-independent-app]] | `codex/omo-independent-app` | Codex `/root` | `in_progress` | `auto` | 99% | build 3 已提交外部 Beta App Review，等待 Apple 审核结果 |
-| [[plans/codex-ui-system-consistency]] | `codex/ui-system-consistency` | Codex `/root` | `in_progress` | `auto` | 85% | 完成稳定文档、Release 构建与最终全量回归 |
+| [[plans/codex-ui-system-consistency]] | `codex/ui-system-consistency` | Codex `/root` | `completed` | `auto` | 100% | 等待用户决定是否 push 当前分支并创建 PR；禁止直接合并或部署 production |
 
 ## 使用规则
 

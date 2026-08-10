@@ -342,11 +342,11 @@ git commit -m "fix: close Omo visual consistency gaps"
 **Interfaces:**
 - Stable docs describe only implemented/verified behavior and link synthetic evidence separately from staging evidence.
 
-- [ ] **Step 1: Update the stable layout contract**
+- [x] **Step 1: Update the stable layout contract**
 
 Document the one token source, navigation/modal/create position semantics, action roles, Scaffold ownership, and visual validation matrix.
 
-- [ ] **Step 2: Run the full Debug suite**
+- [x] **Step 2: Run the full Debug suite**
 
 ```bash
 xcodebuild -project Omo/Omo.xcodeproj -scheme Omo \
@@ -355,11 +355,11 @@ xcodebuild -project Omo/Omo.xcodeproj -scheme Omo \
 
 Expected: all unit and UI tests pass with zero failures.
 
-- [ ] **Step 3: Run Release build and affected UI tests**
+- [x] **Step 3: Run Release build and affected UI tests**
 
 Build Release without test launch arguments; scan the product for fixture identifiers and local URLs according to the existing release gate. Run affected UI tests with test-only compilation flags, not in the distributable app.
 
-- [ ] **Step 4: Run documentation and diff gates**
+- [x] **Step 4: Run documentation and diff gates**
 
 ```bash
 npm --prefix backend run docs:check
@@ -369,11 +369,11 @@ git status --short
 
 Expected: docs check and diff check pass; only intentional tracked changes and local ignored build artifacts remain.
 
-- [ ] **Step 5: Audit every success criterion against evidence**
+- [x] **Step 5: Audit every success criterion against evidence**
 
 Record the command, test count, Simulator/device, launch state, screenshot path, and manual conclusion for each criterion in `plans/codex-ui-system-consistency.md`.
 
-- [ ] **Step 6: Commit completed plan evidence**
+- [x] **Step 6: Commit completed plan evidence**
 
 Mark the plan `completed` only after every criterion is supported.
 

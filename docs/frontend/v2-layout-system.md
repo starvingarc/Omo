@@ -4,10 +4,25 @@
 
 ## 视觉来源
 
-- `OmoTheme` 保存通用页面 token，`RecallPalette`、`RecallHomeMetrics`、`RecallCardMetrics` 与 `RecallRatingMetrics` 集中保存已确认 Figma 首页的颜色、402 × 874 参考画布、卡片和滑条尺寸。
-- 同族卡片共享表面、圆角、阴影和内容节奏。
-- 主要操作使用统一按钮样式，触控区域不小于 44pt。
-- 首页参考坐标只存在于集中 Metrics 中并随可用画布等比缩放；Library 与 Profile 继续使用 safe area 和自适应布局，不增加按机型分支。
+- `OmoDesignTokens.swift` 是全 App 唯一通用视觉来源：`OmoColor`、`OmoTypography`、`OmoSpacing`、`OmoRadius`、`OmoShadow`、`OmoControlMetrics` 和 `OmoRarityColor` 分别表达语义，不允许页面重新声明主题或原始品牌色。
+- 母语固定为珊瑚画布、奶油表面、青绿操作、珊瑚知识强调与深青文字。稀有度只改变装饰色，不增加按钮、确认或信息层级。
+- `RecallHomeMetrics`、`RecallCardMetrics`、`RecallRatingMetrics` 与 `KnowledgeLibraryMetrics` 只保存已确认 Figma 构图的页面尺寸，不拥有品牌色。
+- 首页和知识库参考坐标只存在于集中 Metrics 中并随可用画布等比缩放；Profile、设置与阅读页使用 safe area、自适应布局和滚动兜底，不增加按机型分支。
+
+## 控件语义与位置
+
+- 一级页面左上返回统一使用 `OmoTopIconButton(.back)`；首页左上菜单使用同组件的 `.menu` 语义。两者外观位置一致，但 VoiceOver 标签和 identifier 不混用。
+- 真正覆盖当前流程的 Sheet 在导航栏右上统一使用 `OmoSheetDismissButton`；完整知识和完整上下文统一使用 `OmoReadingSheetScaffold`，关闭后回到原调用页面，不重建抽卡或搜索状态。
+- 上传创建统一使用 `OmoCreateButton`。首页与知识库保留 Figma 已确认的位置；按钮 identifier 固定为 `omo-create`，页面可提供更具体的用户可读标签和提示。
+- 主要、次要、状态和危险操作统一由 `OmoActionButton` / `OmoStatusAction` 表达。颜色由动作角色决定，不用页面颜色暗示未实现的新语义。
+- 图标按钮与所有关键操作命中区域不小于 44pt；共享按钮不得靠页面局部 padding 修补位置差异。
+
+## 页面骨架
+
+- `OmoAdaptivePageScaffold` 负责普通自适应页面的画布、导航栏和品牌 tint，本身不是模态。
+- `OmoReadingSheetScaffold` 负责阅读型模态的画布、奶油内容表面、标题和关闭语义，并标记为模态可访问性区域。
+- 首页和知识库继续使用各自的 Figma 参考画布；共享组件只替换同语义控件，不移动已确认构图。
+- 上传、设置/隐私和完整知识分别位于独立 Surface 文件，`ContentView` 只保留路由和顶层状态，避免同一个文件形成第二套页面规范。
 
 ## 知识库
 
@@ -46,7 +61,17 @@
 - 召回过场：奔跑、翻找、叼回、卡片落定的逐帧图集。
 - 主动回忆：Canvas 刮除涂层，揭示前不向可见界面泄露答案。
 - 反馈与完成：姿态切换、触觉、粒子和轨道光效。
-- `Reduce Motion` 开启时使用静态首帧和短淡入淡出，跳过长过场。
+- `Reduce Motion` 开启时，卡片召回直接落位，循环呼吸、粒子、轨道旋转和按钮弹性缩放停止；必要的状态切换使用静态变化或极短淡入淡出。
+
+## 验证矩阵
+
+| 场景 | 设备 / 变体 | 验证重点 | 证据 |
+|---|---|---|---|
+| 首页、知识库、完整知识、主动回忆、上下文、设置与隐私 | iPhone 17 Pro，默认字号 | 控件位置、颜色、返回路径、模态隔离、搜索与持久入口 | `docs/assets/ui-system-consistency/01-home-controls.png` 至 `08-settings.png` |
+| 首页与主动回忆 | iPhone SE 3，Accessibility Extra Large | 无横向溢出、主要入口不隐藏、卡片仍可操作 | `docs/assets/ui-system-consistency/05-small-home.png`、`09-small-recall-accessibility.png` |
+| Profile | iPhone SE 3，Accessibility Extra Large | 横向模块切换纵向并可滚动 | `docs/assets/ui-system-consistency/06-small-profile-accessibility.png` |
+| 主动回忆与上传动效 | iPhone 17 Pro，Reduce Motion | 无循环呼吸/旋转/粒子，抽卡无需等待动画 | Simulator 人工回归记录见 `plans/codex-ui-system-consistency.md` |
+| 知识库搜索 | iPhone 17 Pro，键盘焦点 | 搜索、清除、结果收窄；返回和上传保持可达 | Simulator 人工回归记录见 `plans/codex-ui-system-consistency.md` |
 
 ## 验证
 

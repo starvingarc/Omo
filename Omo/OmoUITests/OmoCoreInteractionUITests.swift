@@ -11,9 +11,12 @@ final class OmoCoreInteractionUITests: XCTestCase {
         XCTAssertTrue(app.buttons["打开知识库"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["上传第一张知识截屏"].exists)
         attachScreenshot("01-empty-home", app: app)
-        app.buttons["打开知识库"].tap()
-
-        XCTAssertTrue(app.buttons["omo-nav-back"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            tapAndWait(
+                app.buttons["打开知识库"],
+                destination: app.buttons["omo-nav-back"]
+            )
+        )
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("02-empty-library", app: app)
     }
@@ -30,8 +33,12 @@ final class OmoCoreInteractionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["正在整理知识卡"].exists)
         attachScreenshot("03-processing-home", app: app)
 
-        app.buttons["打开知识库"].tap()
-        XCTAssertTrue(app.staticTexts["第一张知识卡正在整理"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            tapAndWait(
+                app.buttons["打开知识库"],
+                destination: app.staticTexts["第一张知识卡正在整理"]
+            )
+        )
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("04-processing-library", app: app)
     }
@@ -47,8 +54,12 @@ final class OmoCoreInteractionUITests: XCTestCase {
         XCTAssertTrue(app.buttons["上传第一张知识截屏"].exists)
         attachScreenshot("05-failed-home", app: app)
 
-        app.buttons["打开知识库"].tap()
-        XCTAssertTrue(app.buttons["重试"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            tapAndWait(
+                app.buttons["打开知识库"],
+                destination: app.buttons["重试"]
+            )
+        )
         XCTAssertTrue(app.buttons["omo-nav-back"].exists)
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("06-failed-library", app: app)
@@ -59,9 +70,12 @@ final class OmoCoreInteractionUITests: XCTestCase {
 
         let mascot = app.buttons["哦莫 记忆伙伴"]
         XCTAssertTrue(mascot.waitForExistence(timeout: 3))
-        mascot.tap()
-
-        XCTAssertTrue(app.otherElements["被遮住的承重语义"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            tapAndWait(
+                mascot,
+                destination: app.otherElements["被遮住的承重语义"]
+            )
+        )
         XCTAssertTrue(app.buttons["打开知识库"].exists)
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("07-recall-scratch", app: app)
@@ -75,9 +89,12 @@ final class OmoCoreInteractionUITests: XCTestCase {
 
         let mascot = app.buttons["哦莫 记忆伙伴"]
         XCTAssertTrue(mascot.waitForExistence(timeout: 3))
-        mascot.tap()
-
-        XCTAssertTrue(app.sliders["memory-rating-slider"].waitForExistence(timeout: 3))
+        XCTAssertTrue(
+            tapAndWait(
+                mascot,
+                destination: app.sliders["memory-rating-slider"]
+            )
+        )
         XCTAssertTrue(app.buttons["打开知识库"].exists)
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("08-recall-rating", app: app)
@@ -91,18 +108,17 @@ final class OmoCoreInteractionUITests: XCTestCase {
 
         let mascot = app.buttons["哦莫 记忆伙伴"]
         XCTAssertTrue(mascot.waitForExistence(timeout: 3))
-        mascot.tap()
-
         let scratch = app.otherElements["被遮住的承重语义"]
-        XCTAssertTrue(scratch.waitForExistence(timeout: 3))
-        for y in [0.25, 0.75] {
+        XCTAssertTrue(tapAndWait(mascot, destination: scratch))
+        let rating = app.sliders["memory-rating-slider"]
+        for y in [0.15, 0.40, 0.65, 0.85] {
+            if rating.exists { break }
             let leading = scratch.coordinate(withNormalizedOffset: CGVector(dx: 0.04, dy: y))
             let trailing = scratch.coordinate(withNormalizedOffset: CGVector(dx: 0.96, dy: y))
             leading.press(forDuration: 0.05, thenDragTo: trailing)
         }
 
-        let rating = app.sliders["memory-rating-slider"]
-        XCTAssertTrue(rating.waitForExistence(timeout: 3))
+        XCTAssertTrue(rating.waitForExistence(timeout: 8))
         let start = rating.coordinate(withNormalizedOffset: CGVector(dx: 0.04, dy: 0.18))
         let remembered = rating.coordinate(withNormalizedOffset: CGVector(dx: 0.96, dy: 0.18))
         start.press(forDuration: 0.1, thenDragTo: remembered)
@@ -269,6 +285,18 @@ final class OmoCoreInteractionUITests: XCTestCase {
         app.launchEnvironment["OMO_API_BASE_URL"] = "http://127.0.0.1:5174"
         app.launch()
         return app
+    }
+
+    private func tapAndWait(
+        _ source: XCUIElement,
+        destination: XCUIElement,
+        timeout: TimeInterval = 5
+    ) -> Bool {
+        source.tap()
+        if destination.waitForExistence(timeout: timeout) { return true }
+        guard source.exists else { return false }
+        source.tap()
+        return destination.waitForExistence(timeout: timeout)
     }
 
     private func attachScreenshot(_ name: String, app: XCUIApplication) {

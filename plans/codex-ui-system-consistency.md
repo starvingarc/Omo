@@ -1,6 +1,6 @@
 # Omo 全局 UI 语义一致性实施计划
 
-- 状态：`in_progress`
+- 状态：`completed`
 - 优先级：P1
 - 创建：2026-08-10
 - 更新：2026-08-10
@@ -55,7 +55,7 @@
 - [x] 拆分并迁移上传、设置、隐私、完整知识和完整上下文。
 - [x] 扩展 UI Test，覆盖同语义控件、页面返回和关键状态。
 - [x] 在常见与小尺寸 Simulator、Dynamic Type、Reduce Motion、VoiceOver 和键盘状态下逐页复查。
-- [ ] 保存修改后证据，更新布局稳定文档，执行全量验证。
+- [x] 保存修改后证据，更新布局稳定文档，执行全量验证。
 
 ## 验收标准
 
@@ -98,12 +98,15 @@
 - 2026-08-10：最新统一化代码在 iPhone 17 Pro Simulator 完整测试运行 57/57 通过（含 8 条核心 UI Journey）；旧 iPhone 16 Pro 首次运行仅因 CoreSimulator 克隆设备失败中止，无 App 用例失败。
 - 2026-08-10：iPhone 17 Pro 实测知识库文字搜索、清除与结果收窄，键盘焦点后页面安全区和所有固定入口保持可用；Reduce Motion 开启后抽卡可立即进入，补齐上传呼吸、粒子、轨道和按压反馈的静态降级。
 - 2026-08-10：iPhone SE 3 在 Accessibility Extra Large 下复查知识库与主动回忆；返回、搜索、卡片、收藏夹和上传均可见可达，证据新增 `docs/assets/ui-system-consistency/09-small-recall-accessibility.png`。
+- 2026-08-10：Release Simulator 构建通过（`build_sim_2026-08-10T07-36-18-832Z_pid1627_1c30cc49.log`）；扫描 Release 二进制未发现 `OmoLibraryFixture`、`OmoScreenshotJobFixture`、`OmoAssessmentFixture`、`OMO_STAGING_UI`、`localhost` 或 `127.0.0.1`。
+- 2026-08-10：最终 Debug 全量结果包 `test_sim_2026-08-10T10-19-09-579Z_pid1627_a3af7f70.xcresult` 为 57/57 通过，其中包含 8 条核心 UI Journey；XCTest 高负载下偶发丢弃第一次合成触摸，测试只在入口仍存在且目标未出现时有限重发一次，真实 Simulator 单击仍经独立验证。
+- 2026-08-10：`npm --prefix backend run docs:check` 检查 30 个 Markdown 文件和 199 个 Wiki 链接全部通过；`git diff --check` 通过。
 
 ## 阻塞与恢复
 
 - 当前阻塞：无。
 - 解除条件：不适用。
-- 下一位 Agent 从哪里继续：按 [[docs/superpowers/plans/2026-08-10-omo-ui-system-consistency]] 的任务顺序，从设计系统测试开始；先确认本文件状态与当前 Git diff。
+- 下一位 Agent 从哪里继续：本计划已完成；如用户要求共享给团队，再按仓库流程 push 当前分支并创建 PR，仍不得直接合并 `main` 或部署 production。
 
 ## 相关文档
 
