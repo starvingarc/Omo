@@ -1,16 +1,16 @@
 import SwiftUI
 
 enum RecallPalette {
-    static let background = Color(red: 1.00, green: 0.61, blue: 0.43)
-    static let panel = Color(red: 0.99, green: 0.89, blue: 0.78)
-    static let card = Color(red: 0.99, green: 0.90, blue: 0.79)
-    static let teal = Color(red: 0.38, green: 0.53, blue: 0.53)
-    static let tealSoft = Color(red: 0.58, green: 0.72, blue: 0.71)
-    static let ink = Color(red: 0.18, green: 0.34, blue: 0.34)
-    static let coral = Color(red: 0.92, green: 0.42, blue: 0.27)
-    static let drawer = Color(red: 0.99, green: 0.91, blue: 0.81)
-    static let scrim = Color.black.opacity(0.26)
-    static let error = Color(red: 0.68, green: 0.22, blue: 0.18)
+    static let background = OmoColor.canvas
+    static let panel = OmoColor.surface
+    static let card = OmoColor.surface
+    static let teal = OmoColor.primary
+    static let tealSoft = OmoColor.primarySoft
+    static let ink = OmoColor.textPrimary
+    static let coral = OmoColor.accent
+    static let drawer = OmoColor.surfaceElevated
+    static let scrim = OmoColor.scrim
+    static let error = OmoColor.error
 }
 
 enum RecallHomeMetrics {

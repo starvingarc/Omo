@@ -48,7 +48,7 @@
 
 ## 任务
 
-- [ ] 以测试先行建立语义 token、控件 Metrics 与动作角色。
+- [x] 以测试先行建立语义 token、控件 Metrics 与动作角色。
 - [ ] 建立共享按钮、顶部导航、模态退出、创建与页面/阅读 Scaffold。
 - [ ] 迁移首页、回忆和知识库，确保已确认 Figma 构图不回归。
 - [ ] 迁移“我的”，保留信息结构与响应式布局并统一颜色和返回位置。
@@ -88,6 +88,10 @@
 - 2026-08-10：使用新分支 `codex/ui-system-consistency`，从已验证 Omo 核心交互基线继续，不修改 `main` 或 production。
 - 2026-08-10：未授权多 Agent；由 `/root` inline execution，避免共享工作树冲突。
 
+## 进度证据
+
+- 2026-08-10：新增 `OmoDesignSystemTests`，先确认因语义 Token 缺失而 RED；实现 `OmoDesignTokens` 后在 iPhone 17 Pro iOS 26.5 Simulator 上 3/3 通过（`.build/ui-system-derived-26/Logs/Test/Test-Omo-2026.08.10_13-27-38-+0800.xcresult`）。
+
 ## 阻塞与恢复
 
 - 当前阻塞：无。
@@ -101,4 +105,3 @@
 - [[docs/frontend/v2-layout-system]]
 - [[docs/product-principles]]
 - [[docs/quality-baseline]]
-

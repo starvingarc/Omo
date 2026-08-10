@@ -47,7 +47,7 @@
 - `docs/assets/ui-system-consistency/`: post-change synthetic Simulator evidence.
 - `plans/codex-ui-system-consistency.md` and `PLANS.md`: progress and evidence.
 
-No `project.pbxproj` edit is expected because the project uses a filesystem-synchronized source root.
+`project.pbxproj` needs one scoped test-target membership edit because `OmoTests` is a conventional group; the app source root remains filesystem-synchronized.
 
 ---
 
@@ -59,11 +59,11 @@ No `project.pbxproj` edit is expected because the project uses a filesystem-sync
 - Modify: `Omo/Omo/RecallDesign.swift`
 
 **Interfaces:**
-- Produces `OmoColor`, `OmoTypography`, `OmoSpacing`, `OmoRadius`, `OmoShadow`, `OmoControlMetrics`, `OmoActionRole`, and `OmoRarityColor.color(for:)`.
+- Produces `OmoColor`, `OmoTypography`, `OmoSpacing`, `OmoRadius`, `OmoShadow`, `OmoControlMetrics`, `OmoActionRole`, and `OmoRarityTier`.
 - `OmoControlMetrics.minimumTouchTarget == 44`, `primaryActionHeight == 54`, `topIconButtonSize == 53`, and `createButtonSize == 65` are the shared component contracts.
 - Screen-specific frames remain in `RecallHomeMetrics` and `KnowledgeLibraryMetrics`.
 
-- [ ] **Step 1: Write failing semantic contract tests**
+- [x] **Step 1: Write failing semantic contract tests**
 
 ```swift
 import XCTest
@@ -91,7 +91,7 @@ final class OmoDesignSystemTests: XCTestCase {
 }
 ```
 
-- [ ] **Step 2: Run the focused test and verify it fails**
+- [x] **Step 2: Run the focused test and verify it fails**
 
 Run:
 
@@ -103,15 +103,15 @@ xcodebuild -project Omo/Omo.xcodeproj -scheme Omo \
 
 Expected: compile failure because the design-system symbols do not exist.
 
-- [ ] **Step 3: Implement the semantic token layer**
+- [x] **Step 3: Implement the semantic token layer**
 
 Create the exact public contracts above. Map the approved existing values from `RecallPalette`; define secondary text and elevated surface once; expose font helpers through semantic SwiftUI `Font` values or functions. Keep all numeric values grouped and named.
 
-- [ ] **Step 4: Run focused tests and compile all current pages**
+- [x] **Step 4: Run focused tests and compile all current pages**
 
 Expected: `OmoDesignSystemTests` passes; no page behavior changes yet.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Omo/Omo/DesignSystem/OmoDesignTokens.swift Omo/Omo/RecallDesign.swift Omo/OmoTests/OmoDesignSystemTests.swift plans/codex-ui-system-consistency.md
