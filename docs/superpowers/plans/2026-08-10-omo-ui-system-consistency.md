@@ -300,33 +300,33 @@ git commit -m "refactor: unify Omo modal and reading surfaces"
 **Interfaces:**
 - No new product behavior; corrections must use shared tokens/components or named screen Metrics.
 
-- [ ] **Step 1: Build and launch fixture states on the common Simulator**
+- [x] **Step 1: Build and launch fixture states on the common Simulator**
 
 Use the existing launch arguments for empty, active job, failed job, many cards, revealed recall, single card, and large Profile.
 
-- [ ] **Step 2: Simulate the full user path**
+- [x] **Step 2: Simulate the full user path**
 
 Tap menu → Profile → back → menu → Settings → privacy → dismiss → Library → search states → card detail → back → Home → upload/photo-picker cancel → recall → scratch → context → rating cancel → rating commit → next/complete. Record any dead end before polishing visuals.
 
-- [ ] **Step 3: Inspect the common Simulator**
+- [x] **Step 3: Inspect the common Simulator**
 
 Check control positions, canonical colors, text hierarchy, touch targets, safe area, scroll, keyboard, loading/disabled/error state, and persistent actions. Save synthetic screenshots.
 
-- [ ] **Step 4: Repeat on a small Simulator**
+- [x] **Step 4: Repeat on a small Simulator**
 
 Use `Omo Verify iPhone SE 3` (`83C91915-FAD5-4C10-8297-86E3AB99E3B6`) on iOS 26.5. Check no horizontal overflow, clipped title, hidden action, or inaccessible scroll content.
 
-- [ ] **Step 5: Check accessibility variants**
+- [x] **Step 5: Check accessibility variants**
 
 Run at an Accessibility Dynamic Type size, Reduce Motion enabled, and inspect VoiceOver labels/hints/order. Verify unrevealed `hiddenSemantic` is absent from the accessibility tree.
 
-- [ ] **Step 6: Fix every discovered issue through shared sources**
+- [x] **Step 6: Fix every discovered issue through shared sources**
 
 For each issue, first identify whether it belongs to tokens, component Metrics, or screen Metrics. Add a focused regression assertion when behavior or accessibility is affected; do not add call-site nudges for shared problems.
 
-- [ ] **Step 7: Repeat Steps 1–5 until the audit has no unresolved in-scope item**
+- [x] **Step 7: Repeat Steps 1–5 until the audit has no unresolved in-scope item**
 
-- [ ] **Step 8: Commit the verified correction set and evidence**
+- [x] **Step 8: Commit the verified correction set and evidence**
 
 ```bash
 git add Omo docs/assets/ui-system-consistency plans/codex-ui-system-consistency.md

@@ -54,7 +54,7 @@
 - [x] 迁移“我的”，保留信息结构与响应式布局并统一颜色和返回位置。
 - [x] 拆分并迁移上传、设置、隐私、完整知识和完整上下文。
 - [x] 扩展 UI Test，覆盖同语义控件、页面返回和关键状态。
-- [ ] 在常见与小尺寸 Simulator、Dynamic Type、Reduce Motion、VoiceOver 和键盘状态下逐页复查。
+- [x] 在常见与小尺寸 Simulator、Dynamic Type、Reduce Motion、VoiceOver 和键盘状态下逐页复查。
 - [ ] 保存修改后证据，更新布局稳定文档，执行全量验证。
 
 ## 验收标准
@@ -96,6 +96,8 @@
 - 2026-08-10：Debug 单元测试 49/49 通过；首轮 UI Journey 发现知识库共享上传按钮丢失具体 VoiceOver 文案，修复后失败的 3 条路径 3/3 通过，其余 5 条此前已通过。
 - 2026-08-10：上传、设置/隐私、完整知识已从 `ContentView` 拆分为独立 Surface；完整上下文与阅读 Surface 采用同一模态退出合同，页面代码已直接使用 `OmoColor`，旧 `RecallPalette` 兼容层移除。
 - 2026-08-10：最新统一化代码在 iPhone 17 Pro Simulator 完整测试运行 57/57 通过（含 8 条核心 UI Journey）；旧 iPhone 16 Pro 首次运行仅因 CoreSimulator 克隆设备失败中止，无 App 用例失败。
+- 2026-08-10：iPhone 17 Pro 实测知识库文字搜索、清除与结果收窄，键盘焦点后页面安全区和所有固定入口保持可用；Reduce Motion 开启后抽卡可立即进入，补齐上传呼吸、粒子、轨道和按压反馈的静态降级。
+- 2026-08-10：iPhone SE 3 在 Accessibility Extra Large 下复查知识库与主动回忆；返回、搜索、卡片、收藏夹和上传均可见可达，证据新增 `docs/assets/ui-system-consistency/09-small-recall-accessibility.png`。
 
 ## 阻塞与恢复
 

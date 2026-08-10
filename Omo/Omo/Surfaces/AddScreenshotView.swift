@@ -4,6 +4,7 @@ import SwiftUI
 struct AddScreenshotView: View {
     @EnvironmentObject private var store: OmoStore
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var selection: PhotosPickerItem?
     @State private var showsAIConsent = false
     @State private var pulse = false
@@ -99,6 +100,10 @@ struct AddScreenshotView: View {
                 Text("截图会经 Omo 的测试服务发送给第三方 AI，用于识别内容并生成记忆卡。请不要上传含敏感个人信息的截图。")
             }
             .onAppear {
+                guard !reduceMotion else {
+                    pulse = false
+                    return
+                }
                 withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) { pulse = true }
             }
         }

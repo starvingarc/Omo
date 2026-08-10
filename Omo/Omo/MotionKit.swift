@@ -83,6 +83,7 @@ private actor OmoAtlasCache {
 struct OmoSparkBurst: View {
     let trigger: Int
     var tint = Color.yellow
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var expanded = false
 
     var body: some View {
@@ -112,11 +113,12 @@ struct OmoSparkBurst: View {
 
     private func play() {
         expanded = false
-        withAnimation(.easeOut(duration: 0.72)) { expanded = true }
+        withAnimation(reduceMotion ? .none : .easeOut(duration: 0.72)) { expanded = true }
     }
 }
 
 struct OmoOrbit: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var turns = false
 
     var body: some View {
@@ -135,6 +137,10 @@ struct OmoOrbit: View {
             }
         }
         .onAppear {
+            guard !reduceMotion else {
+                turns = false
+                return
+            }
             withAnimation(.linear(duration: 1.5).repeatForever(autoreverses: false)) { turns = true }
         }
         .allowsHitTesting(false)
@@ -144,10 +150,12 @@ struct OmoOrbit: View {
 
 
 struct SpringPressStyle: ButtonStyle {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .scaleEffect(configuration.isPressed ? 0.965 : 1)
             .brightness(configuration.isPressed ? -0.04 : 0)
-            .animation(.spring(response: 0.24, dampingFraction: 0.72), value: configuration.isPressed)
+            .animation(reduceMotion ? nil : .spring(response: 0.24, dampingFraction: 0.72), value: configuration.isPressed)
     }
 }

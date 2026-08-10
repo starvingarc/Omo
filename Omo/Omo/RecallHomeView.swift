@@ -3,6 +3,7 @@ import SwiftUI
 
 struct RecallHomeView: View {
     @EnvironmentObject private var store: OmoStore
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let onOpenLibrary: () -> Void
     let onOpenProfile: () -> Void
     let onOpenSettings: () -> Void
@@ -227,7 +228,7 @@ struct RecallHomeView: View {
         guard !candidates.isEmpty else { return }
         deck = candidates
         UISelectionFeedbackGenerator().selectionChanged()
-        withAnimation(.spring(response: 0.48, dampingFraction: 0.84)) {
+        withAnimation(reduceMotion ? .none : .spring(response: 0.48, dampingFraction: 0.84)) {
             isRoundActive = true
         }
     }
@@ -244,13 +245,13 @@ struct RecallHomeView: View {
     }
 
     private func finishNotificationRecall() {
-        withAnimation(.easeOut(duration: 0.22)) {
+        withAnimation(reduceMotion ? .none : .easeOut(duration: 0.22)) {
             store.notificationRecallCard = nil
         }
     }
 
     private func finishRound() {
-        withAnimation(.easeOut(duration: 0.22)) {
+        withAnimation(reduceMotion ? .none : .easeOut(duration: 0.22)) {
             isRoundActive = false
             deck = []
         }
