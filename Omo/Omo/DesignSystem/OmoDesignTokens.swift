@@ -64,7 +64,7 @@ enum OmoControlMetrics {
     static let createButtonSize: CGFloat = 65
 }
 
-enum OmoActionRole: CaseIterable {
+enum OmoActionRole: CaseIterable, Equatable {
     case primary
     case secondary
     case status

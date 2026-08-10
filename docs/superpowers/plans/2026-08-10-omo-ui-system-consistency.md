@@ -131,23 +131,23 @@ git commit -m "refactor: establish Omo design tokens"
 - Produces `OmoAdaptivePageScaffold` and `OmoReadingSheetScaffold(title:dismissTitle:onDismiss:content:)`.
 - Shared identifiers: `omo-nav-menu`, `omo-nav-back`, `omo-sheet-dismiss`, `omo-create`, and `omo-primary-action`.
 
-- [ ] **Step 1: Extend failing tests for kind metadata and metrics**
+- [x] **Step 1: Extend failing tests for kind metadata and metrics**
 
 Test `.menu` and `.back` labels/identifiers, action role names, and shared corner/touch metrics without rendering SwiftUI.
 
-- [ ] **Step 2: Verify focused tests fail**
+- [x] **Step 2: Verify focused tests fail**
 
 Expected: missing control kind and metadata symbols.
 
-- [ ] **Step 3: Implement shared controls and scaffolds**
+- [x] **Step 3: Implement shared controls and scaffolds**
 
 Use semantic tokens only. Keep component-specific numeric values in `OmoControlMetrics`; do not embed screen coordinates. Every icon-only control supplies label, hint, identifier, plain button style, and a 44pt-or-larger content shape.
 
-- [ ] **Step 4: Run focused tests and Debug build**
+- [x] **Step 4: Run focused tests and Debug build**
 
 Expected: token tests pass and the app builds before screen migration.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Omo/Omo/DesignSystem/OmoButtons.swift Omo/Omo/DesignSystem/OmoScaffolds.swift Omo/OmoTests/OmoDesignSystemTests.swift plans/codex-ui-system-consistency.md

@@ -25,4 +25,21 @@ final class OmoDesignSystemTests: XCTestCase {
         XCTAssertNotNil(OmoRarityColor.color(for: "SR"))
         XCTAssertNotNil(OmoRarityColor.color(for: "SSR"))
     }
+
+    func testTopNavigationKindsHaveStableSemantics() {
+        XCTAssertEqual(OmoTopIconKind.menu.accessibilityLabel, "打开菜单")
+        XCTAssertEqual(OmoTopIconKind.menu.accessibilityIdentifier, "omo-nav-menu")
+        XCTAssertEqual(OmoTopIconKind.menu.systemImage, "line.3.horizontal")
+
+        XCTAssertEqual(OmoTopIconKind.back.accessibilityLabel, "返回")
+        XCTAssertEqual(OmoTopIconKind.back.accessibilityIdentifier, "omo-nav-back")
+        XCTAssertEqual(OmoTopIconKind.back.systemImage, "chevron.left")
+    }
+
+    func testDismissKindsShareOneControlContract() {
+        XCTAssertEqual(OmoDismissKind.close.title, "关闭")
+        XCTAssertEqual(OmoDismissKind.done.title, "完成")
+        XCTAssertEqual(OmoDismissKind.close.accessibilityIdentifier, "omo-sheet-dismiss")
+        XCTAssertEqual(OmoDismissKind.done.accessibilityIdentifier, "omo-sheet-dismiss")
+    }
 }
