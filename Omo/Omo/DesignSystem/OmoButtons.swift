@@ -92,25 +92,33 @@ struct OmoSheetDismissButton: View {
 }
 
 struct OmoCreateButton: View {
+    var accessibilityLabel = "上传截图"
+    var accessibilityHint = "从照片中选择一张截图"
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Image(systemName: "plus")
-                .font(.system(size: 23, weight: .semibold))
-                .foregroundStyle(OmoColor.textOnPrimary)
-                .frame(
-                    width: OmoControlMetrics.createButtonSize,
-                    height: OmoControlMetrics.createButtonSize
-                )
-                .background(OmoColor.primary, in: RoundedRectangle(cornerRadius: 25))
-                .contentShape(RoundedRectangle(cornerRadius: 25))
-                .shadow(color: OmoColor.textPrimary.opacity(0.30), radius: 2, y: 4)
+            OmoCreateButtonLabel()
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("上传截图")
-        .accessibilityHint("从照片中选择一张截图")
+        .accessibilityLabel(accessibilityLabel)
+        .accessibilityHint(accessibilityHint)
         .accessibilityIdentifier("omo-create")
+    }
+}
+
+struct OmoCreateButtonLabel: View {
+    var body: some View {
+        Image(systemName: "plus")
+            .font(.system(size: 23, weight: .semibold))
+            .foregroundStyle(OmoColor.textOnPrimary)
+            .frame(
+                width: OmoControlMetrics.createButtonSize,
+                height: OmoControlMetrics.createButtonSize
+            )
+            .background(OmoColor.primary, in: RoundedRectangle(cornerRadius: 25))
+            .contentShape(RoundedRectangle(cornerRadius: 25))
+            .shadow(color: OmoColor.textPrimary.opacity(0.30), radius: 2, y: 4)
     }
 }
 

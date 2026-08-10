@@ -1,20 +1,6 @@
 import PhotosUI
 import SwiftUI
 
-enum OmoTheme {
-    static let background = Color(red: 0.93, green: 0.94, blue: 0.73)
-    static let surface = Color(red: 1.00, green: 0.98, blue: 0.92)
-    static let primary = Color(red: 0.58, green: 0.65, blue: 0.27)
-    static let ink = Color(red: 0.24, green: 0.24, blue: 0.21)
-    static let muted = Color(red: 0.49, green: 0.49, blue: 0.43)
-    static let warning = Color(red: 0.88, green: 0.49, blue: 0.36)
-    static let mist = Color(red: 0.91, green: 0.94, blue: 0.95)
-    static let recall = Color(red: 0.98, green: 0.79, blue: 0.70)
-    static let success = Color(red: 0.87, green: 0.92, blue: 0.82)
-    static let pageInset: CGFloat = 24
-    static let radius: CGFloat = 20
-}
-
 struct ContentView: View {
     @EnvironmentObject private var store: OmoStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -24,10 +10,11 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            OmoTheme.background.ignoresSafeArea()
+            OmoColor.canvas.ignoresSafeArea()
             currentPage
                 .id(store.selectedTab)
                 .transition(.opacity.combined(with: .scale(scale: 0.985)))
+                .accessibilityHidden(showsAdd || showsSettings || store.presentedCard != nil)
         }
         .task {
             #if DEBUG || OMO_TESTING
@@ -66,7 +53,7 @@ struct ContentView: View {
             if !store.message.isEmpty, store.selectedTab != .today {
                 Text(store.message)
                     .font(.footnote.weight(.semibold))
-                    .foregroundStyle(OmoTheme.ink)
+                    .foregroundStyle(OmoColor.textPrimary)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 12)
                     .background(.ultraThinMaterial, in: Capsule())
@@ -121,40 +108,34 @@ private struct LibraryCardDetailView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    HStack {
-                        RarityBadge(value: card.rarity)
-                        Spacer()
-                        Text("掌握 · \(card.masteryTitle)")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(OmoTheme.primary)
-                    }
-                    Text(card.coreKnowledge)
-                        .font(.title3.bold())
-                        .foregroundStyle(OmoTheme.ink)
-                    Text(card.explanation)
-                        .foregroundStyle(OmoTheme.muted)
-                    Divider()
-                    Text(card.sourceTitle)
-                        .font(.subheadline.weight(.semibold))
-                    if card.sourceIsVerified,
-                       let value = card.sourceUrl,
-                       let url = URL(string: value) {
-                        Link(destination: url) {
-                            Label("查看原文", systemImage: "arrow.up.right.square")
-                                .frame(minHeight: 44)
-                        }
+        OmoReadingSheetScaffold(title: "完整知识", onDismiss: { dismiss() }) {
+            VStack(alignment: .leading, spacing: OmoSpacing.large) {
+                HStack {
+                    RarityBadge(value: card.rarity)
+                    Spacer()
+                    Text("掌握 · \(card.masteryTitle)")
+                        .font(OmoTypography.metadata.weight(.semibold))
+                        .foregroundStyle(OmoColor.primary)
+                }
+                Text(card.coreKnowledge)
+                    .font(OmoTypography.cardKnowledge)
+                    .foregroundStyle(OmoColor.textPrimary)
+                Text(card.explanation)
+                    .font(OmoTypography.body)
+                    .foregroundStyle(OmoColor.textSecondary)
+                Divider().overlay(OmoColor.separator)
+                Text(card.sourceTitle)
+                    .font(OmoTypography.metadata.weight(.semibold))
+                    .foregroundStyle(OmoColor.textPrimary)
+                if card.sourceIsVerified,
+                   let value = card.sourceUrl,
+                   let url = URL(string: value) {
+                    Link(destination: url) {
+                        Label("查看原文", systemImage: "arrow.up.right.square")
+                            .font(OmoTypography.action)
+                            .frame(minHeight: OmoControlMetrics.minimumTouchTarget)
                     }
                 }
-                .padding(OmoTheme.pageInset)
-            }
-            .background(OmoTheme.background)
-            .navigationTitle("完整知识")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                Button("完成") { dismiss() }
             }
         }
     }
@@ -171,6 +152,7 @@ private struct SettingsView: View {
                     Label("默认每轮最多 10 张", systemImage: "rectangle.stack")
                     Label("刮开 80% 后进行自评", systemImage: "hand.draw")
                 }
+                .listRowBackground(OmoColor.surface)
                 Section {
                     if allowsAIProcessing {
                         Button("撤回 AI 处理许可") {
@@ -189,12 +171,19 @@ private struct SettingsView: View {
                 } footer: {
                     Text("撤回后，现有记忆卡不受影响；下次上传截图时会重新询问。")
                 }
+                .listRowBackground(OmoColor.surface)
             }
-            .navigationTitle("Settings")
+            .navigationTitle("设置")
+            .scrollContentBackground(.hidden)
+            .background(OmoColor.canvas)
+            .tint(OmoColor.primary)
             .toolbar {
-                Button("完成") { dismiss() }
+                ToolbarItem(placement: .topBarTrailing) {
+                    OmoSheetDismissButton(.done) { dismiss() }
+                }
             }
         }
+        .accessibilityAddTraits(.isModal)
     }
 }
 
@@ -233,31 +222,34 @@ private struct AddScreenshotView: View {
                 Text("把截图变成记忆卡")
                     .font(.title2.bold())
                 Text("Omo 会读取截图并提炼一个值得再次想起的知识点。")
-                    .foregroundStyle(OmoTheme.muted)
+                    .foregroundStyle(OmoColor.textSecondary)
                     .multilineTextAlignment(.center)
 
                 PhotosPicker(selection: $selection, matching: .images) {
                     Label(isSubmitting ? "正在接收截图" : "选择截图", systemImage: "photo")
                         .frame(maxWidth: .infinity)
                         .frame(height: 54)
-                        .foregroundStyle(.white)
-                        .background(OmoTheme.primary, in: RoundedRectangle(cornerRadius: 16))
+                        .font(OmoTypography.action)
+                        .foregroundStyle(OmoColor.textOnPrimary)
+                        .background(OmoColor.primary, in: RoundedRectangle(cornerRadius: OmoRadius.control))
                 }
                 .disabled(isSubmitting)
                 .buttonStyle(SpringPressStyle())
 
                 if isSubmitting {
                     ProgressView("正在安全保存任务")
-                        .tint(OmoTheme.primary)
+                        .tint(OmoColor.primary)
                 }
                 Spacer()
             }
-            .padding(OmoTheme.pageInset)
-            .background(OmoTheme.background.ignoresSafeArea())
+            .padding(OmoSpacing.pageInset)
+            .background(OmoColor.canvas.ignoresSafeArea())
             .navigationTitle("添加内容")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("关闭") { dismiss() }
+                ToolbarItem(placement: .topBarTrailing) {
+                    OmoSheetDismissButton(.close) { dismiss() }
+                }
             }
             .onChange(of: selection) { _, item in
                 guard let item else { return }
@@ -296,6 +288,7 @@ private struct AddScreenshotView: View {
                 withAnimation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true)) { pulse = true }
             }
         }
+        .accessibilityAddTraits(.isModal)
     }
 
     private func submit(_ data: Data, hasConsent: Bool) async {
@@ -309,27 +302,43 @@ private struct AddScreenshotView: View {
 }
 
 private struct OmoPrivacyView: View {
+    @Environment(\.dismiss) private var dismiss
+
     var body: some View {
         List {
             Section("截图与 AI") {
                 Text("只有你主动选择的截图才会上传。Omo 测试服务会临时保存压缩截图以完成可恢复的 AI 处理任务，并在任务成功或失败后删除服务端副本。设备会在成功后删除本地重试副本；失败时保留该副本供你重试。")
             }
+            .listRowBackground(OmoColor.surface)
             Section("保存的数据") {
                 Text("Omo 使用随机生成的匿名设备标识区分数据，并保存生成后的记忆卡、来源信息、自评结果和复习时间。")
             }
+            .listRowBackground(OmoColor.surface)
             Section("语音搜索") {
                 Text("语音由 Apple 的语音识别能力转成文字；搜索文字会发送给 Omo 测试服务和第三方 AI，用于返回相关卡片。")
             }
+            .listRowBackground(OmoColor.surface)
             Section("通知与追踪") {
                 Text("复习通知仅在设备本地安排。Omo 当前不包含广告 SDK，不进行跨 App 或网站追踪。")
             }
+            .listRowBackground(OmoColor.surface)
             Section("管理数据") {
                 Text("若要删除当前匿名设备标识关联的云端数据，请联系支持。")
                 Link("mingyuhan0814@gmail.com", destination: URL(string: "mailto:mingyuhan0814@gmail.com")!)
             }
+            .listRowBackground(OmoColor.surface)
         }
         .navigationTitle("隐私说明")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .scrollContentBackground(.hidden)
+        .background(OmoColor.canvas)
+        .tint(OmoColor.primary)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                OmoTopIconButton(kind: .back) { dismiss() }
+            }
+        }
     }
 }
 
@@ -347,11 +356,7 @@ private struct RarityBadge: View {
     }
 
     private var color: Color {
-        switch value {
-        case "SSR": .purple
-        case "SR": .orange
-        default: OmoTheme.primary
-        }
+        OmoRarityColor.color(for: value)
     }
 }
 
@@ -362,11 +367,11 @@ private struct OmoLaunchScene: View {
 
     var body: some View {
         ZStack {
-            OmoTheme.background.ignoresSafeArea()
+            OmoColor.canvas.ignoresSafeArea()
             OmoOrbit()
                 .scaleEffect(arrived ? 1 : 0.55)
                 .opacity(arrived ? 0.7 : 0)
-            OmoSparkBurst(trigger: arrived ? 1 : 0, tint: OmoTheme.primary)
+            OmoSparkBurst(trigger: arrived ? 1 : 0, tint: OmoColor.primary)
             VStack(spacing: 4) {
                 Image("OmoPoseStretch")
                     .resizable()
@@ -376,10 +381,10 @@ private struct OmoLaunchScene: View {
                     .rotationEffect(.degrees(arrived ? 0 : -8))
                 Text("Omo")
                     .font(.system(size: 42, weight: .black, design: .rounded))
-                    .foregroundStyle(OmoTheme.ink)
+                    .foregroundStyle(OmoColor.textPrimary)
                 Text("让值得记住的，再回来一次")
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(OmoTheme.muted)
+                    .foregroundStyle(OmoColor.textSecondary)
             }
             .scaleEffect(arrived ? 1 : 0.72)
             .opacity(arrived ? 1 : 0)

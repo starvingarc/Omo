@@ -160,30 +160,16 @@ struct RecallHomeView: View {
         if case .failed(let loadMessage) = store.loadState,
            store.failedScreenshotJobs.isEmpty,
            store.activeScreenshotJobs.isEmpty {
-            Button {
+            OmoStatusAction(title: "连接失败，点此重试", systemImage: "arrow.clockwise", role: .destructive) {
                 Task { await store.load() }
-            } label: {
-                Text("连接失败，点此重试")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
-            .font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(RecallPalette.error)
             .frame(width: RecallHomeMetrics.statusFrame.width, height: RecallHomeMetrics.statusFrame.height)
             .position(x: RecallHomeMetrics.statusFrame.midX, y: RecallHomeMetrics.statusFrame.midY)
             .accessibilityHint(loadMessage)
         } else if let failed = store.failedScreenshotJobs.first {
-            Button {
+            OmoStatusAction(title: "整理失败，点此重试", systemImage: "arrow.clockwise", role: .destructive) {
                 Task { await store.retryScreenshotJob(failed) }
-            } label: {
-                Text("整理失败，点此重试")
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
-            .font(.system(size: 13, weight: .semibold))
-            .foregroundStyle(RecallPalette.error)
             .frame(width: RecallHomeMetrics.statusFrame.width, height: RecallHomeMetrics.statusFrame.height)
             .position(x: RecallHomeMetrics.statusFrame.midX, y: RecallHomeMetrics.statusFrame.midY)
             .accessibilityHint(failed.errorMessage)
@@ -207,10 +193,7 @@ struct RecallHomeView: View {
 
     private func uploadPicker(label: String) -> some View {
         return PhotosPicker(selection: $selectedScreenshot, matching: .images, photoLibrary: .shared()) {
-            Image("FirstLaunchUpload")
-                .resizable()
-                .frame(width: RecallHomeMetrics.uploadFrame.width, height: RecallHomeMetrics.uploadFrame.height)
-                .contentShape(Rectangle())
+            OmoCreateButtonLabel()
         }
         .buttonStyle(.plain)
         .position(x: RecallHomeMetrics.uploadFrame.midX, y: RecallHomeMetrics.uploadFrame.midY)
@@ -340,15 +323,8 @@ private struct RecallHomeScaffold<Content: View>: View {
                 .position(x: RecallHomeMetrics.panelFrame.midX, y: RecallHomeMetrics.panelFrame.midY)
                 .accessibilityHidden(true)
 
-            Button { drawerIsOpen = true } label: {
-                Image("FirstLaunchMenu")
-                    .resizable()
-                    .frame(width: RecallHomeMetrics.menuFrame.width, height: RecallHomeMetrics.menuFrame.height)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
+            OmoTopIconButton(kind: .menu) { drawerIsOpen = true }
             .position(x: RecallHomeMetrics.menuFrame.midX, y: RecallHomeMetrics.menuFrame.midY)
-            .accessibilityLabel("打开菜单")
 
             mascot
             content
@@ -383,8 +359,8 @@ private struct RecallHomeScaffold<Content: View>: View {
                 .font(.system(size: 24, weight: .bold, design: .rounded))
                 .foregroundStyle(RecallPalette.ink)
                 .padding(.bottom, 16)
-            drawerButton("Profile", symbol: "person.crop.circle", action: onOpenProfile)
-            drawerButton("Settings", symbol: "gearshape", action: onOpenSettings)
+            drawerButton("我的", symbol: "person.crop.circle", action: onOpenProfile)
+            drawerButton("设置", symbol: "gearshape", action: onOpenSettings)
             Spacer()
         }
         .padding(.horizontal, 24)

@@ -50,8 +50,8 @@
 
 - [x] 以测试先行建立语义 token、控件 Metrics 与动作角色。
 - [x] 建立共享按钮、顶部导航、模态退出、创建与页面/阅读 Scaffold。
-- [ ] 迁移首页、回忆和知识库，确保已确认 Figma 构图不回归。
-- [ ] 迁移“我的”，保留信息结构与响应式布局并统一颜色和返回位置。
+- [x] 迁移首页、回忆和知识库，确保已确认 Figma 构图不回归。
+- [x] 迁移“我的”，保留信息结构与响应式布局并统一颜色和返回位置。
 - [ ] 拆分并迁移上传、设置、隐私、完整知识和完整上下文。
 - [ ] 扩展 UI Test，覆盖同语义控件、页面返回和关键状态。
 - [ ] 在常见与小尺寸 Simulator、Dynamic Type、Reduce Motion、VoiceOver 和键盘状态下逐页复查。
@@ -92,6 +92,8 @@
 
 - 2026-08-10：新增 `OmoDesignSystemTests`，先确认因语义 Token 缺失而 RED；实现 `OmoDesignTokens` 后在 iPhone 17 Pro iOS 26.5 Simulator 上 3/3 通过（`.build/ui-system-derived-26/Logs/Test/Test-Omo-2026.08.10_13-27-38-+0800.xcresult`）。
 - 2026-08-10：共享顶部导航、Sheet 退出、创建、动作/状态按钮和两类 Scaffold 完成；语义合同测试 5/5 通过，Debug `build-for-testing` 通过。
+- 2026-08-10：首页、回忆、知识库和“我的”已迁移；iPhone 17 Pro 逐页点击验证首页、知识库、做题、自评、上下文、完整知识、我的、设置与隐私；iPhone SE 3 验证空首页与 Accessibility Extra Large Profile 可滚动且无裁切。
+- 2026-08-10：Debug 单元测试 49/49 通过；首轮 UI Journey 发现知识库共享上传按钮丢失具体 VoiceOver 文案，修复后失败的 3 条路径 3/3 通过，其余 5 条此前已通过。
 
 ## 阻塞与恢复
 

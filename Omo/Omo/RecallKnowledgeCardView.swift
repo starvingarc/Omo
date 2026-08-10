@@ -61,11 +61,7 @@ struct RecallKnowledgeCardStack: View {
     }
 
     private func rarityColor(_ rarity: String) -> Color {
-        switch rarity {
-        case "SSR": RecallPalette.coral
-        case "SR": Color(red: 0.49, green: 0.72, blue: 0.80)
-        default: RecallPalette.teal
-        }
+        OmoRarityColor.color(for: rarity)
     }
 }
 
@@ -424,53 +420,41 @@ private struct RecallContextView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 22) {
-                    Text(weightedKnowledge)
-                        .font(.system(size: 20, weight: .regular))
-                        .foregroundStyle(RecallPalette.ink)
-                        .lineSpacing(7)
-                        .fixedSize(horizontal: false, vertical: true)
+        OmoReadingSheetScaffold(title: "完整上下文", onDismiss: { dismiss() }) {
+            VStack(alignment: .leading, spacing: OmoSpacing.xLarge) {
+                Text(weightedKnowledge)
+                    .font(.system(size: 20, weight: .regular))
+                    .foregroundStyle(OmoColor.textPrimary)
+                    .lineSpacing(7)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                    Text(card.explanation)
-                        .font(.body)
-                        .foregroundStyle(RecallPalette.ink.opacity(0.72))
-                        .lineSpacing(6)
-                        .fixedSize(horizontal: false, vertical: true)
+                Text(card.explanation)
+                    .font(OmoTypography.body)
+                    .foregroundStyle(OmoColor.textSecondary)
+                    .lineSpacing(6)
+                    .fixedSize(horizontal: false, vertical: true)
 
-                    Divider()
+                Divider().overlay(OmoColor.separator)
 
-                    VStack(alignment: .leading, spacing: 10) {
-                        Label(sourceStatusTitle, systemImage: sourceStatusSymbol)
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(RecallPalette.teal)
+                VStack(alignment: .leading, spacing: OmoSpacing.medium) {
+                    Label(sourceStatusTitle, systemImage: sourceStatusSymbol)
+                        .font(OmoTypography.metadata.weight(.semibold))
+                        .foregroundStyle(OmoColor.primary)
 
-                        Text(card.sourceTitle)
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(RecallPalette.ink)
+                    Text(card.sourceTitle)
+                        .font(OmoTypography.bodyEmphasized)
+                        .foregroundStyle(OmoColor.textPrimary)
 
-                        if card.sourceIsVerified,
-                           let value = card.sourceUrl,
-                           let url = URL(string: value) {
-                            Link(destination: url) {
-                                Label("查看原文", systemImage: "arrow.up.right.square")
-                                    .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(RecallPalette.teal)
-                                    .frame(minHeight: 44)
-                            }
+                    if card.sourceIsVerified,
+                       let value = card.sourceUrl,
+                       let url = URL(string: value) {
+                        Link(destination: url) {
+                            Label("查看原文", systemImage: "arrow.up.right.square")
+                                .font(OmoTypography.action)
+                                .foregroundStyle(OmoColor.primary)
+                                .frame(minHeight: OmoControlMetrics.minimumTouchTarget)
                         }
                     }
-                }
-                .padding(24)
-            }
-            .background(RecallPalette.drawer)
-            .navigationTitle("完整上下文")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("完成") { dismiss() }
-                        .foregroundStyle(RecallPalette.teal)
                 }
             }
         }
@@ -479,11 +463,11 @@ private struct RecallContextView: View {
     private var weightedKnowledge: AttributedString {
         var value = AttributedString(card.coreKnowledge)
         value.font = .system(size: 20, weight: .regular)
-        value.foregroundColor = RecallPalette.ink
+        value.foregroundColor = OmoColor.textPrimary
         if let hidden = card.hiddenSemantic,
            let range = value.range(of: hidden) {
             value[range].font = .system(size: 20, weight: .semibold)
-            value[range].foregroundColor = RecallPalette.coral
+            value[range].foregroundColor = OmoColor.accent
         }
         return value
     }

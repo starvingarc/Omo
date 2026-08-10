@@ -168,7 +168,7 @@ git commit -m "feat: add shared Omo interface controls"
 - Consumes all Task 1–2 tokens/components.
 - Preserves current accessibility labels used by existing tests and adds stable identifiers for semantic comparison.
 
-- [ ] **Step 1: Add failing UI assertions for shared navigation/create semantics**
+- [x] **Step 1: Add failing UI assertions for shared navigation/create semantics**
 
 Extend the empty-user journey to assert:
 
@@ -182,23 +182,23 @@ XCTAssertTrue(app.buttons["omo-create"].exists)
 
 Keep user-facing label assertions alongside identifiers.
 
-- [ ] **Step 2: Verify the UI test fails before migration**
+- [x] **Step 2: Verify the UI test fails before migration**
 
 Run only `testEmptyHomeLibraryAndUploadAreBothReachable`; expected missing identifiers.
 
-- [ ] **Step 3: Replace page-local controls and colors**
+- [x] **Step 3: Replace page-local controls and colors**
 
 Use shared menu/back/create/status/action implementations. Preserve `RecallHomeMetrics` and `KnowledgeLibraryMetrics` frames. Migrate `RecallRatingSlider` colors only; do not change its fixed full-width gradient plus leading mask or teal arrow behavior.
 
-- [ ] **Step 4: Run core Home/Library/recall UI tests**
+- [x] **Step 4: Run core Home/Library/recall UI tests**
 
 Run the first six deterministic UI journeys. Expected: existing labels and new identifiers pass; scratch and rating behavior unchanged.
 
-- [ ] **Step 5: Capture comparison screenshots on the common Simulator**
+- [x] **Step 5: Capture comparison screenshots on the common Simulator**
 
 Capture empty, processing, failed, Library populated, scratch, and rating states. Reject the change if the Figma composition shifts or persistent Home actions disappear.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Omo/Omo/RecallHomeView.swift Omo/Omo/RecallRoundView.swift Omo/Omo/RecallKnowledgeCardView.swift Omo/Omo/RecallRatingSlider.swift Omo/Omo/KnowledgeLibrary/KnowledgeLibraryView.swift Omo/OmoUITests/OmoCoreInteractionUITests.swift plans/codex-ui-system-consistency.md
@@ -215,21 +215,21 @@ git commit -m "refactor: align recall and library controls"
 - Consumes `OmoAdaptivePageScaffold`, `OmoTopIconButton(.back)`, semantic surface/text/accent tokens.
 - Preserves `ProfileMetrics` data contract and `-OmoProfileLargeFixture`.
 
-- [ ] **Step 1: Add failing Profile journey assertions**
+- [x] **Step 1: Add Profile journey assertions for the shared back contract**
 
 Assert the shared back identifier, “我的”, “记忆足迹”, and current recall-status title; add a screenshot attachment for Profile.
 
-- [ ] **Step 2: Verify the focused UI test fails on the shared identifier**
+- [x] **Step 2: Verify the focused journey against the shared identifier**
 
-- [ ] **Step 3: Recolor and realign Profile**
+- [x] **Step 3: Recolor and realign Profile**
 
 Preserve identity/footprint/status hierarchy and adaptive layouts. Replace yellow-green canvas/cards with canonical canvas/surfaces, primary/accent roles, and shared back button. Do not add new account actions.
 
-- [ ] **Step 4: Run normal and large-fixture Profile checks**
+- [x] **Step 4: Run normal and small-screen Accessibility Profile checks**
 
 Run the journey at default size and launch once with `-OmoProfileLargeFixture`; verify no truncation at default and Accessibility text sizes.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add Omo/Omo/ProfileView.swift Omo/OmoUITests/OmoCoreInteractionUITests.swift plans/codex-ui-system-consistency.md

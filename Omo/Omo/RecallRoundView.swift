@@ -77,17 +77,16 @@ struct RecallRoundView: View {
                 }
 
                 if !errorMessage.isEmpty {
-                    Button(action: retry) {
-                        Label("保存失败，点此重试", systemImage: "arrow.clockwise")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundStyle(RecallPalette.error)
-                            .frame(
-                                width: RecallHomeMetrics.errorFrame.width,
-                                height: RecallHomeMetrics.errorFrame.height
-                            )
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
+                    OmoStatusAction(
+                        title: "保存失败，点此重试",
+                        systemImage: "arrow.clockwise",
+                        role: .destructive,
+                        action: retry
+                    )
+                    .frame(
+                        width: RecallHomeMetrics.errorFrame.width,
+                        height: RecallHomeMetrics.errorFrame.height
+                    )
                     .position(
                         x: RecallHomeMetrics.errorFrame.midX,
                         y: RecallHomeMetrics.errorFrame.midY

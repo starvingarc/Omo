@@ -106,21 +106,12 @@ struct KnowledgeLibraryView: View {
                 )
                 .accessibilityHidden(true)
 
-            Button(action: onBack) {
-                Image("KnowledgeLibraryBack")
-                    .resizable()
-                    .frame(
-                        width: KnowledgeLibraryMetrics.backFrame.width,
-                        height: KnowledgeLibraryMetrics.backFrame.height
-                    )
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
+            OmoTopIconButton(kind: .back, action: onBack)
             .position(
                 x: KnowledgeLibraryMetrics.backFrame.midX,
                 y: KnowledgeLibraryMetrics.backFrame.midY
             )
-            .accessibilityLabel("返回首页")
+            .accessibilityHint("返回首页")
 
             Image("OmoPoseStretch")
                 .resizable()
@@ -169,22 +160,15 @@ struct KnowledgeLibraryView: View {
                 )
                 .accessibilityHidden(true)
 
-            Button(action: onAdd) {
-                Image("FirstLaunchUpload")
-                    .resizable()
-                    .frame(
-                        width: KnowledgeLibraryMetrics.uploadFrame.width,
-                        height: KnowledgeLibraryMetrics.uploadFrame.height
-                    )
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
+            OmoCreateButton(
+                accessibilityLabel: "上传新的知识截屏",
+                accessibilityHint: "打开截图上传流程",
+                action: onAdd
+            )
             .position(
                 x: KnowledgeLibraryMetrics.uploadFrame.midX,
                 y: KnowledgeLibraryMetrics.uploadFrame.midY
             )
-            .accessibilityLabel("上传新的知识截屏")
-            .accessibilityHint("打开截图上传流程")
         }
     }
 
@@ -278,10 +262,7 @@ private struct KnowledgeLibraryJobBanner: View {
                 .foregroundStyle(RecallPalette.teal)
                 .lineLimit(1)
             if let actionTitle {
-                Button(actionTitle, action: action)
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(RecallPalette.coral)
-                    .frame(minWidth: 44, minHeight: 44)
+                OmoStatusAction(title: actionTitle, systemImage: "arrow.clockwise", role: .destructive, action: action)
             }
         }
         .padding(.leading, 14)
@@ -628,11 +609,7 @@ private struct KnowledgeLibraryCardView: View {
     }
 
     private var rarityColor: Color {
-        switch card.rarity {
-        case "SSR": RecallPalette.coral
-        case "SR": RecallPalette.tealSoft
-        default: RecallPalette.teal
-        }
+        OmoRarityColor.color(for: card.rarity)
     }
 
     private struct CardStyle {
@@ -646,12 +623,12 @@ private struct KnowledgeLibraryCardView: View {
             case 1:
                 background = RecallPalette.teal
                 text = RecallPalette.panel
-                semantic = Color.white
+                semantic = OmoColor.textOnPrimary
                 border = RecallPalette.teal.opacity(0.75)
             case 4:
                 background = RecallPalette.coral
                 text = RecallPalette.panel
-                semantic = Color.white
+                semantic = OmoColor.textOnPrimary
                 border = RecallPalette.coral.opacity(0.75)
             default:
                 background = RecallPalette.card
@@ -706,11 +683,8 @@ private struct KnowledgeLibraryStateView: View {
                 .foregroundStyle(RecallPalette.teal)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 250)
-            Button(actionTitle, action: action)
-                .font(.system(size: bodyFontSize, weight: .bold, design: .rounded))
-                .foregroundStyle(RecallPalette.panel)
-                .frame(minWidth: 132, minHeight: 44)
-                .background(RecallPalette.teal, in: Capsule())
+            OmoActionButton(title: actionTitle, action: action)
+                .frame(maxWidth: 220)
         }
         .padding(24)
     }

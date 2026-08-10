@@ -53,6 +53,7 @@ struct OmoReadingSheetScaffold<Content: View>: View {
             }
         }
         .tint(OmoColor.primary)
+        .accessibilityAddTraits(.isModal)
     }
 }
 

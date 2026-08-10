@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// 艺术指导（参考 agent-ui-atlas）：
 /// - 日式清新：编辑式留白、小面积强调、克制秩序（页首大标题 + 细线 + 段落节奏）。
-/// - 斯堪的纳维亚：暖中性表面与功能宁静（`OmoTheme.surface` 低阴影卡片）。
+/// - 斯堪的纳维亚：暖中性表面与功能宁静（`OmoColor.surface` 低阴影卡片）。
 /// - 有机亲自然：大地绿流动曲线（`OmoBlobShape` 鹅卵石形舞台与状态徽章）。
 /// - 可爱极简：圆润吉祥物舞台与胶囊 chip（`OmoPoseHeart` + leaf 徽章）。
 /// - 原研哉白盒画廊：细分割线、克制字体，内容本身提供色彩（身份区不套卡片盒）。
@@ -43,7 +43,7 @@ struct ProfileView: View {
     // MARK: - body
 
     var body: some View {
-        ScrollView {
+        OmoAdaptivePageScaffold(scrolls: true) {
             VStack(alignment: .leading, spacing: 0) {
                 header
                 ProfileIdentityHero()
@@ -53,12 +53,10 @@ struct ProfileView: View {
                 ProfileRecallSection(dueCount: metrics.dueCount)
                     .padding(.top, 18)
             }
-            .padding(.horizontal, OmoTheme.pageInset)
             .padding(.top, 12)
             .padding(.bottom, 12)
         }
-        .foregroundStyle(OmoTheme.ink)
-        .scrollIndicators(.hidden)
+        .foregroundStyle(OmoColor.textPrimary)
     }
 
     // MARK: - View helpers
@@ -67,12 +65,8 @@ struct ProfileView: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 8) {
                 if let onBack {
-                    Button(action: onBack) {
-                        Image(systemName: "chevron.left")
-                            .frame(width: 44, height: 44)
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("返回首页")
+                    OmoTopIconButton(kind: .back, action: onBack)
+                        .accessibilityHint("返回首页")
                 }
                 Text("我的")
                     .font(.largeTitle.bold())
@@ -114,7 +108,7 @@ private struct OmoBlobShape: Shape {
 private struct ProfileHairline: View {
     var body: some View {
         Rectangle()
-            .fill(OmoTheme.ink.opacity(0.10))
+            .fill(OmoColor.separator)
             .frame(height: 1)
             .frame(maxWidth: .infinity)
             .accessibilityHidden(true)
@@ -130,7 +124,7 @@ private struct ProfileSectionHeader: View {
                 .font(.headline)
                 .accessibilityAddTraits(.isHeader)
             Capsule()
-                .fill(OmoTheme.primary.opacity(0.55))
+                .fill(OmoColor.primary.opacity(0.55))
                 .frame(width: 24, height: 3)
                 .accessibilityHidden(true)
         }
@@ -199,15 +193,15 @@ private struct ProfileIdentityHero: View {
                 .font(.title.bold())
             Text("你的记忆伙伴")
                 .font(.subheadline.weight(.semibold))
-                .foregroundStyle(OmoTheme.primary)
+                .foregroundStyle(OmoColor.primary)
                 .padding(.horizontal, 10)
                 .padding(.vertical, 5)
-                .background(OmoTheme.primary.opacity(0.13), in: Capsule())
+                .background(OmoColor.primary.opacity(0.13), in: Capsule())
                 .lineLimit(1)
                 .minimumScaleFactor(0.75)
             Text("你负责截图，Omo 负责让它回来。")
                 .font(.subheadline)
-                .foregroundStyle(OmoTheme.muted)
+                .foregroundStyle(OmoColor.textSecondary)
                 .multilineTextAlignment(alignment == .center ? .center : .leading)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -217,13 +211,13 @@ private struct ProfileIdentityHero: View {
         ZStack(alignment: .topTrailing) {
             ZStack {
                 OmoBlobShape()
-                    .fill(OmoTheme.primary.opacity(0.12))
+                    .fill(OmoColor.primary.opacity(0.12))
                     .rotationEffect(.degrees(-9))
                     .offset(x: -6, y: 7)
                 OmoBlobShape()
                     .fill(
                         LinearGradient(
-                            colors: [OmoTheme.success, OmoTheme.mist],
+                            colors: [OmoColor.primarySoft, OmoColor.surfaceElevated],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -234,14 +228,14 @@ private struct ProfileIdentityHero: View {
                     .padding(16)
             }
             Circle()
-                .fill(OmoTheme.surface)
+                .fill(OmoColor.surface)
                 .frame(width: 30, height: 30)
                 .overlay {
                     Image(systemName: "leaf.fill")
                         .font(.caption.weight(.bold))
-                        .foregroundStyle(OmoTheme.primary)
+                        .foregroundStyle(OmoColor.primary)
                 }
-                .shadow(color: OmoTheme.primary.opacity(0.18), radius: 4, y: 2)
+                .shadow(color: OmoColor.primary.opacity(0.18), radius: 4, y: 2)
                 .offset(x: 6, y: -3)
         }
         .frame(width: stageSize, height: stageSize)
@@ -298,7 +292,7 @@ private struct ProfileFootprintSection: View {
             label: "记忆卡",
             unit: "张",
             systemImage: "rectangle.stack.fill",
-            tint: OmoTheme.primary
+            tint: OmoColor.primary
         )
     }
 
@@ -308,7 +302,7 @@ private struct ProfileFootprintSection: View {
             label: "已召回",
             unit: "次",
             systemImage: "sparkles",
-            tint: OmoTheme.warning
+            tint: OmoColor.accent
         )
     }
 }
@@ -336,7 +330,7 @@ private struct ProfileStatCard: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(label)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(OmoTheme.muted)
+                    .foregroundStyle(OmoColor.textSecondary)
                 HStack(alignment: .firstTextBaseline, spacing: 4) {
                     Text(value, format: .number)
                         .font(.system(.title, design: .rounded, weight: .bold))
@@ -345,17 +339,17 @@ private struct ProfileStatCard: View {
                         .minimumScaleFactor(0.55)
                     Text(unit)
                         .font(.footnote.weight(.semibold))
-                        .foregroundStyle(OmoTheme.muted)
+                        .foregroundStyle(OmoColor.textSecondary)
                 }
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(
-            OmoTheme.surface,
-            in: RoundedRectangle(cornerRadius: OmoTheme.radius, style: .continuous)
+            OmoColor.surface,
+            in: RoundedRectangle(cornerRadius: OmoRadius.card, style: .continuous)
         )
-        .shadow(color: OmoTheme.primary.opacity(0.10), radius: 10, y: 5)
+        .shadow(color: OmoColor.primary.opacity(0.10), radius: 10, y: 5)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(label)
         .accessibilityValue("\(value.formatted()) \(unit)")
@@ -380,7 +374,7 @@ private struct ProfileRecallSection: View {
 
     private var hasDue: Bool { dueCount > 0 }
 
-    private var tint: Color { hasDue ? OmoTheme.warning : OmoTheme.primary }
+    private var tint: Color { hasDue ? OmoColor.accent : OmoColor.primary }
 
     private var statusIcon: String { hasDue ? "clock.fill" : "checkmark.circle.fill" }
 
@@ -416,10 +410,10 @@ private struct ProfileRecallSection: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
         .background(
-            OmoTheme.surface,
-            in: RoundedRectangle(cornerRadius: OmoTheme.radius, style: .continuous)
+            OmoColor.surface,
+            in: RoundedRectangle(cornerRadius: OmoRadius.card, style: .continuous)
         )
-        .shadow(color: OmoTheme.primary.opacity(0.10), radius: 10, y: 5)
+        .shadow(color: OmoColor.primary.opacity(0.10), radius: 10, y: 5)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(title)
         .accessibilityValue(statusAccessibilityValue)
@@ -434,7 +428,7 @@ private struct ProfileRecallSection: View {
                     .font(.headline)
                 Text(detail)
                     .font(.subheadline)
-                    .foregroundStyle(OmoTheme.muted)
+                    .foregroundStyle(OmoColor.textSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 8)
@@ -451,7 +445,7 @@ private struct ProfileRecallSection: View {
             }
             Text(detail)
                 .font(.subheadline)
-                .foregroundStyle(OmoTheme.muted)
+                .foregroundStyle(OmoColor.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
             dueFigure(alignment: .leading)
         }
@@ -479,7 +473,7 @@ private struct ProfileRecallSection: View {
                 .minimumScaleFactor(0.6)
             Text("张待召回")
                 .font(.caption)
-                .foregroundStyle(OmoTheme.muted)
+                .foregroundStyle(OmoColor.textSecondary)
         }
     }
 }

@@ -13,7 +13,7 @@ final class OmoCoreInteractionUITests: XCTestCase {
         attachScreenshot("01-empty-home", app: app)
         app.buttons["打开知识库"].tap()
 
-        XCTAssertTrue(app.buttons["返回首页"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["omo-nav-back"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("02-empty-library", app: app)
     }
@@ -49,7 +49,7 @@ final class OmoCoreInteractionUITests: XCTestCase {
 
         app.buttons["打开知识库"].tap()
         XCTAssertTrue(app.buttons["重试"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.buttons["返回首页"].exists)
+        XCTAssertTrue(app.buttons["omo-nav-back"].exists)
         XCTAssertTrue(app.buttons["上传新的知识截屏"].exists)
         attachScreenshot("06-failed-library", app: app)
     }
@@ -118,22 +118,22 @@ final class OmoCoreInteractionUITests: XCTestCase {
         let app = launch(arguments: ["-OmoLibraryFixture", "empty"])
 
         app.buttons["打开菜单"].tap()
-        XCTAssertTrue(app.buttons["Profile"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.buttons["Settings"].exists)
-        app.buttons["Profile"].tap()
+        XCTAssertTrue(app.buttons["我的"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["设置"].exists)
+        app.buttons["我的"].tap()
         XCTAssertTrue(app.staticTexts["我的"].waitForExistence(timeout: 3))
-        app.buttons["返回首页"].tap()
+        app.buttons["omo-nav-back"].tap()
 
         XCTAssertTrue(app.buttons["打开菜单"].waitForExistence(timeout: 3))
         app.buttons["打开菜单"].tap()
-        app.buttons["Settings"].tap()
-        XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 3))
+        app.buttons["设置"].tap()
+        XCTAssertTrue(app.navigationBars["设置"].waitForExistence(timeout: 3))
         app.buttons["完成"].tap()
 
         XCTAssertTrue(app.buttons["打开知识库"].waitForExistence(timeout: 3))
         app.buttons["打开知识库"].tap()
-        XCTAssertTrue(app.buttons["返回首页"].waitForExistence(timeout: 3))
-        app.buttons["返回首页"].tap()
+        XCTAssertTrue(app.buttons["omo-nav-back"].waitForExistence(timeout: 3))
+        app.buttons["omo-nav-back"].tap()
 
         let upload = app.buttons["上传第一张知识截屏"]
         XCTAssertTrue(upload.waitForExistence(timeout: 3))
@@ -159,7 +159,7 @@ final class OmoCoreInteractionUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["正在整理知识卡"].waitForExistence(timeout: 3))
         app.buttons["打开知识库"].tap()
         XCTAssertTrue(app.staticTexts["第一张知识卡正在整理"].waitForExistence(timeout: 3))
-        app.buttons["返回首页"].tap()
+        app.buttons["omo-nav-back"].tap()
 
         let upload = app.buttons["上传第一张知识截屏"]
         XCTAssertTrue(upload.waitForExistence(timeout: 3))
