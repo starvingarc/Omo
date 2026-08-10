@@ -68,7 +68,7 @@ struct KnowledgeLibraryView: View {
                 height: KnowledgeLibraryMetrics.referenceSize.height * scale
             )
             ZStack {
-                RecallPalette.background.ignoresSafeArea()
+                OmoColor.canvas.ignoresSafeArea()
                 referenceCanvas
                     .frame(
                         width: KnowledgeLibraryMetrics.referenceSize.width,
@@ -95,7 +95,7 @@ struct KnowledgeLibraryView: View {
     private var referenceCanvas: some View {
         ZStack(alignment: .topLeading) {
             KnowledgeLibraryPanelShape()
-                .fill(RecallPalette.panel)
+                .fill(OmoColor.surface)
                 .frame(
                     width: KnowledgeLibraryMetrics.panelFrame.width,
                     height: KnowledgeLibraryMetrics.panelFrame.height
@@ -221,10 +221,10 @@ struct KnowledgeLibraryView: View {
             )
         case .searching:
             VStack(spacing: 14) {
-                ProgressView().tint(RecallPalette.teal)
+                ProgressView().tint(OmoColor.primary)
                 Text("正在帮你找")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(RecallPalette.teal)
+                    .foregroundStyle(OmoColor.primary)
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel("正在搜索知识库")
@@ -255,11 +255,11 @@ private struct KnowledgeLibraryJobBanner: View {
     var body: some View {
         HStack(spacing: 10) {
             if showsProgress {
-                ProgressView().tint(RecallPalette.teal)
+                ProgressView().tint(OmoColor.primary)
             }
             Text(title)
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
-                .foregroundStyle(RecallPalette.teal)
+                .foregroundStyle(OmoColor.primary)
                 .lineLimit(1)
             if let actionTitle {
                 OmoStatusAction(title: actionTitle, systemImage: "arrow.clockwise", role: .destructive, action: action)
@@ -268,9 +268,9 @@ private struct KnowledgeLibraryJobBanner: View {
         .padding(.leading, 14)
         .padding(.trailing, actionTitle == nil ? 14 : 4)
         .frame(minHeight: 44)
-        .background(RecallPalette.drawer, in: Capsule())
-        .overlay(Capsule().stroke(RecallPalette.teal.opacity(0.45), lineWidth: 1))
-        .shadow(color: RecallPalette.ink.opacity(0.12), radius: 4, y: 3)
+        .background(OmoColor.surfaceElevated, in: Capsule())
+        .overlay(Capsule().stroke(OmoColor.primary.opacity(0.45), lineWidth: 1))
+        .shadow(color: OmoColor.textPrimary.opacity(0.12), radius: 4, y: 3)
         .padding(.top, 4)
     }
 }
@@ -295,7 +295,7 @@ private struct KnowledgeLibrarySearchBar: View {
         HStack(spacing: 5) {
             TextField("描述你想找的知识", text: $model.query)
                 .font(.system(size: searchFontSize, weight: .medium))
-                .foregroundStyle(RecallPalette.ink)
+                .foregroundStyle(OmoColor.textPrimary)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(false)
                 .submitLabel(.search)
@@ -312,7 +312,7 @@ private struct KnowledgeLibrarySearchBar: View {
                 } label: {
                     Image(systemName: "xmark.circle.fill")
                         .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(RecallPalette.teal.opacity(0.62))
+                        .foregroundStyle(OmoColor.primary.opacity(0.62))
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -327,7 +327,7 @@ private struct KnowledgeLibrarySearchBar: View {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(model.speechState == .listening ? RecallPalette.coral : RecallPalette.teal)
+                    .foregroundStyle(model.speechState == .listening ? OmoColor.accent : OmoColor.primary)
                     .frame(width: 32, height: 24)
                     .scaleEffect(model.speechState == .listening && microphonePulse && !reduceMotion ? 1.12 : 1)
                     .frame(width: 44, height: 44)
@@ -355,15 +355,15 @@ private struct KnowledgeLibrarySearchBar: View {
                     if isSearching {
                         ProgressView()
                             .controlSize(.small)
-                            .tint(RecallPalette.teal)
+                            .tint(OmoColor.primary)
                     } else {
                         Text("帮我找")
                             .font(.system(size: 12, weight: .semibold))
                     }
                 }
-                .foregroundStyle(RecallPalette.teal)
+                .foregroundStyle(OmoColor.primary)
                 .frame(width: 68, height: 44)
-                .background(RecallPalette.teal.opacity(canSubmit ? 0.16 : 0.09), in: Capsule())
+                .background(OmoColor.primary.opacity(canSubmit ? 0.16 : 0.09), in: Capsule())
                 .contentShape(Capsule())
             }
             .buttonStyle(.plain)
@@ -372,10 +372,10 @@ private struct KnowledgeLibrarySearchBar: View {
         }
         .padding(.leading, 18)
         .padding(.trailing, 10)
-        .background(RecallPalette.drawer, in: RoundedRectangle(cornerRadius: KnowledgeLibraryMetrics.searchCornerRadius, style: .continuous))
+        .background(OmoColor.surfaceElevated, in: RoundedRectangle(cornerRadius: KnowledgeLibraryMetrics.searchCornerRadius, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: KnowledgeLibraryMetrics.searchCornerRadius, style: .continuous)
-                .stroke(model.speechState == .listening ? RecallPalette.coral : RecallPalette.teal, lineWidth: model.speechState == .listening ? 2 : 1)
+                .stroke(model.speechState == .listening ? OmoColor.accent : OmoColor.primary, lineWidth: model.speechState == .listening ? 2 : 1)
         )
         .shadow(color: Color.black.opacity(0.16), radius: 4, x: 2, y: 5)
         .overlay(alignment: .bottomLeading) { speechNotice.offset(y: 31) }
@@ -390,17 +390,17 @@ private struct KnowledgeLibrarySearchBar: View {
                 UIApplication.shared.open(url)
             }
             .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(RecallPalette.error)
+            .foregroundStyle(OmoColor.error)
             .frame(minHeight: 44)
         case .unavailable:
             Text("语音输入暂时不可用，可以继续打字搜索")
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(RecallPalette.error)
+                .foregroundStyle(OmoColor.error)
                 .frame(minHeight: 44)
         case .failed(let message):
             Text(message)
                 .font(.system(size: 11, weight: .semibold))
-                .foregroundStyle(RecallPalette.error)
+                .foregroundStyle(OmoColor.error)
                 .frame(minHeight: 44)
         case .idle, .listening:
             EmptyView()
@@ -621,19 +621,19 @@ private struct KnowledgeLibraryCardView: View {
         init(index: Int) {
             switch index % 5 {
             case 1:
-                background = RecallPalette.teal
-                text = RecallPalette.panel
+                background = OmoColor.primary
+                text = OmoColor.surface
                 semantic = OmoColor.textOnPrimary
-                border = RecallPalette.teal.opacity(0.75)
+                border = OmoColor.primary.opacity(0.75)
             case 4:
-                background = RecallPalette.coral
-                text = RecallPalette.panel
+                background = OmoColor.accent
+                text = OmoColor.surface
                 semantic = OmoColor.textOnPrimary
-                border = RecallPalette.coral.opacity(0.75)
+                border = OmoColor.accent.opacity(0.75)
             default:
-                background = RecallPalette.card
-                text = RecallPalette.ink
-                semantic = RecallPalette.coral
+                background = OmoColor.surface
+                text = OmoColor.textPrimary
+                semantic = OmoColor.accent
                 border = Color.white.opacity(0.7)
             }
         }
@@ -655,7 +655,7 @@ private struct KnowledgeLibraryPageIndicator: View {
         HStack(spacing: 9) {
             ForEach(visibleIndices, id: \.self) { index in
                 Circle()
-                    .fill(index == currentPage ? RecallPalette.coral : RecallPalette.teal.opacity(0.35))
+                    .fill(index == currentPage ? OmoColor.accent : OmoColor.primary.opacity(0.35))
                     .frame(width: index == currentPage ? 10 : 7, height: index == currentPage ? 10 : 7)
             }
         }
@@ -677,10 +677,10 @@ private struct KnowledgeLibraryStateView: View {
         VStack(spacing: 14) {
             Text(title)
                 .font(.system(size: titleFontSize, weight: .bold, design: .rounded))
-                .foregroundStyle(RecallPalette.ink)
+                .foregroundStyle(OmoColor.textPrimary)
             Text(message)
                 .font(.system(size: bodyFontSize, weight: .medium))
-                .foregroundStyle(RecallPalette.teal)
+                .foregroundStyle(OmoColor.primary)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: 250)
             OmoActionButton(title: actionTitle, action: action)

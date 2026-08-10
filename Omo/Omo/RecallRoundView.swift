@@ -67,7 +67,7 @@ struct RecallRoundView: View {
 
                 if isSubmitting {
                     ProgressView()
-                        .tint(RecallPalette.teal)
+                        .tint(OmoColor.primary)
                         .frame(width: 44, height: 44)
                         .position(
                             x: RecallHomeMetrics.ratingFrame.midX,

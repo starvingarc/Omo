@@ -252,25 +252,25 @@ git commit -m "refactor: unify the Omo profile surface"
 - `LibraryCardDetailView(card:)` and `RecallContextView(card:)` consume `OmoReadingSheetScaffold`.
 - Dismiss controls share identifier `omo-sheet-dismiss`; primary upload shares `omo-primary-action`.
 
-- [ ] **Step 1: Add failing all-surface UI assertions**
+- [x] **Step 1: Add failing all-surface UI assertions**
 
 Update the empty-user journey to open Settings and assert navigation title “设置” and dismiss identifier. Add a deterministic Debug launch route or use existing Library fixture to open complete knowledge; assert both reading surfaces expose the shared dismiss identifier and preserve required content.
 
-- [ ] **Step 2: Verify focused tests fail on current English/system surfaces**
+- [x] **Step 2: Verify focused tests fail on current English/system surfaces**
 
-- [ ] **Step 3: Extract views without behavior changes**
+- [x] **Step 3: Extract views without behavior changes**
 
 Move code from `ContentView.swift` into focused files first. Build and run current behavior before visual migration.
 
-- [ ] **Step 4: Apply shared modal and reading design**
+- [x] **Step 4: Apply shared modal and reading design**
 
 Use cream modal surfaces, canonical text/action colors, shared sections and dismiss controls. Replace system grouped gray Settings background. Convert direct `.purple`/`.orange` rarity use to `OmoRarityColor`.
 
-- [ ] **Step 5: Run upload, consent, settings, privacy, detail, context, and return-path tests**
+- [x] **Step 5: Run upload, consent, settings, privacy, detail, context, and return-path tests**
 
 Verify closing each modal returns to the invoking page, does not reset recall/task state, and does not hide Home actions.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add Omo/Omo/ContentView.swift Omo/Omo/RecallKnowledgeCardView.swift Omo/Omo/Surfaces Omo/OmoUITests/OmoCoreInteractionUITests.swift plans/codex-ui-system-consistency.md

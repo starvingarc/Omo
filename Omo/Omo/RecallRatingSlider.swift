@@ -54,7 +54,7 @@ struct RecallRatingSlider: View {
 
     private func track(width: CGFloat, travel: CGFloat) -> some View {
         ZStack(alignment: .leading) {
-            Capsule().fill(RecallPalette.card)
+            Capsule().fill(OmoColor.surface)
 
             ratingGradient
             .frame(width: width, height: RecallRatingMetrics.trackHeight)
@@ -66,7 +66,7 @@ struct RecallRatingSlider: View {
 
             ForEach(RecallRatingScale.nodes, id: \.assessment) { node in
                 Circle()
-                    .fill(RecallPalette.teal)
+                    .fill(OmoColor.primary)
                     .frame(
                         width: RecallRatingMetrics.nodeDiameter,
                         height: RecallRatingMetrics.nodeDiameter
@@ -78,8 +78,8 @@ struct RecallRatingSlider: View {
             }
         }
         .frame(width: width, height: RecallRatingMetrics.trackHeight)
-        .overlay(Capsule().stroke(RecallPalette.teal, lineWidth: 1))
-        .shadow(color: RecallPalette.ink.opacity(0.2), radius: 4, y: 4)
+        .overlay(Capsule().stroke(OmoColor.primary, lineWidth: 1))
+        .shadow(color: OmoColor.textPrimary.opacity(0.2), radius: 4, y: 4)
         .offset(y: 1.75)
     }
 
@@ -88,7 +88,7 @@ struct RecallRatingSlider: View {
             ForEach(RecallRatingScale.nodes, id: \.assessment) { node in
                 Text(node.assessment.sliderTitle)
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(RecallPalette.teal)
+                    .foregroundStyle(OmoColor.primary)
                     .frame(width: 48)
                     .position(
                         x: nodeCenter(for: node.assessment, travel: travel),
@@ -103,8 +103,8 @@ struct RecallRatingSlider: View {
     private func knob(width: CGFloat, travel: CGFloat) -> some View {
         ZStack(alignment: .topLeading) {
             Capsule()
-                .fill(RecallPalette.drawer)
-                .shadow(color: RecallPalette.ink.opacity(0.27), radius: 5, y: 3)
+                .fill(OmoColor.surfaceElevated)
+                .shadow(color: OmoColor.textPrimary.opacity(0.27), radius: 5, y: 3)
                 .frame(
                     width: RecallRatingMetrics.knobSize.width,
                     height: RecallRatingMetrics.knobSize.height
@@ -124,7 +124,7 @@ struct RecallRatingSlider: View {
 
             Image(systemName: "arrow.right")
                 .font(.system(size: 16, weight: .bold))
-                .foregroundStyle(RecallPalette.teal)
+                .foregroundStyle(OmoColor.primary)
                 .frame(
                     width: RecallRatingMetrics.knobSize.width,
                     height: RecallRatingMetrics.knobSize.height
@@ -183,7 +183,7 @@ struct RecallRatingSlider: View {
 
     private var ratingGradient: LinearGradient {
         LinearGradient(
-            colors: [RecallPalette.card, RecallPalette.teal.opacity(0.8)],
+            colors: [OmoColor.surface, OmoColor.primary.opacity(0.8)],
             startPoint: .leading,
             endPoint: .trailing
         )

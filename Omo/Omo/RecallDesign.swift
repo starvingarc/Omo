@@ -1,18 +1,5 @@
 import SwiftUI
 
-enum RecallPalette {
-    static let background = OmoColor.canvas
-    static let panel = OmoColor.surface
-    static let card = OmoColor.surface
-    static let teal = OmoColor.primary
-    static let tealSoft = OmoColor.primarySoft
-    static let ink = OmoColor.textPrimary
-    static let coral = OmoColor.accent
-    static let drawer = OmoColor.surfaceElevated
-    static let scrim = OmoColor.scrim
-    static let error = OmoColor.error
-}
-
 enum RecallHomeMetrics {
     static let referenceSize = CGSize(width: 402, height: 874)
     static let menuFrame = CGRect(x: 25, y: 43, width: 70, height: 70)

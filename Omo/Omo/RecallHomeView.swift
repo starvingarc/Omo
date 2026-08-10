@@ -90,7 +90,7 @@ struct RecallHomeView: View {
         ZStack(alignment: .topLeading) {
             Text("上传第一张知识截屏")
                 .font(.system(size: 24, weight: .bold, design: .rounded))
-                .foregroundStyle(RecallPalette.coral)
+                .foregroundStyle(OmoColor.accent)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.82)
                 .frame(width: RecallHomeMetrics.promptFrame.width, height: RecallHomeMetrics.promptFrame.height)
@@ -119,7 +119,7 @@ struct RecallHomeView: View {
                     .renderingMode(.template)
                     .scaledToFit()
                     .scaleEffect(x: 1, y: -1)
-                    .foregroundStyle(RecallPalette.teal.opacity(0.78))
+                    .foregroundStyle(OmoColor.primary.opacity(0.78))
                     .frame(width: RecallHomeMetrics.mascotArrowFrame.width, height: RecallHomeMetrics.mascotArrowFrame.height)
                     .position(x: RecallHomeMetrics.mascotArrowFrame.midX, y: RecallHomeMetrics.mascotArrowFrame.midY)
                     .accessibilityHidden(true)
@@ -182,7 +182,7 @@ struct RecallHomeView: View {
             if !text.isEmpty {
                 Text(text)
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(activeCount > 0 ? RecallPalette.teal : RecallPalette.error)
+                .foregroundStyle(activeCount > 0 ? OmoColor.primary : OmoColor.error)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .frame(width: RecallHomeMetrics.statusFrame.width, height: RecallHomeMetrics.statusFrame.height)
@@ -293,7 +293,7 @@ private struct RecallHomeScaffold<Content: View>: View {
                 height: RecallHomeMetrics.referenceSize.height * scale
             )
             ZStack(alignment: .leading) {
-                RecallPalette.background.ignoresSafeArea()
+                OmoColor.canvas.ignoresSafeArea()
                 referenceCanvas
                     .frame(width: RecallHomeMetrics.referenceSize.width, height: RecallHomeMetrics.referenceSize.height)
                     .scaleEffect(scale)
@@ -303,7 +303,7 @@ private struct RecallHomeScaffold<Content: View>: View {
                     .accessibilityHidden(drawerIsOpen)
 
                 if drawerIsOpen {
-                    RecallPalette.scrim
+                    OmoColor.scrim
                         .ignoresSafeArea()
                         .contentShape(Rectangle())
                         .onTapGesture { drawerIsOpen = false }
@@ -357,7 +357,7 @@ private struct RecallHomeScaffold<Content: View>: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Omo")
                 .font(.system(size: 24, weight: .bold, design: .rounded))
-                .foregroundStyle(RecallPalette.ink)
+                .foregroundStyle(OmoColor.textPrimary)
                 .padding(.bottom, 16)
             drawerButton("我的", symbol: "person.crop.circle", action: onOpenProfile)
             drawerButton("设置", symbol: "gearshape", action: onOpenSettings)
@@ -367,7 +367,7 @@ private struct RecallHomeScaffold<Content: View>: View {
         .padding(.top, 72)
         .frame(width: width)
         .frame(maxHeight: .infinity, alignment: .topLeading)
-        .background(RecallPalette.drawer)
+        .background(OmoColor.surfaceElevated)
         .clipShape(UnevenRoundedRectangle(bottomTrailingRadius: 28, topTrailingRadius: 28, style: .continuous))
         .ignoresSafeArea()
         .accessibilityAddTraits(.isModal)
@@ -380,7 +380,7 @@ private struct RecallHomeScaffold<Content: View>: View {
         } label: {
             Label(title, systemImage: symbol)
                 .font(.system(size: 17, weight: .semibold))
-                .foregroundStyle(RecallPalette.ink)
+                .foregroundStyle(OmoColor.textPrimary)
                 .frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
                 .contentShape(Rectangle())
         }

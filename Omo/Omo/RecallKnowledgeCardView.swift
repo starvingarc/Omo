@@ -45,10 +45,10 @@ struct RecallKnowledgeCardStack: View {
             cornerRadius: RecallCardMetrics.cornerRadius,
             style: .continuous
         )
-        .fill(depth == 1 ? RecallPalette.tealSoft : RecallPalette.card)
+        .fill(depth == 1 ? OmoColor.primarySoft : OmoColor.surface)
         .overlay(
             RoundedRectangle(cornerRadius: RecallCardMetrics.cornerRadius)
-                .stroke(RecallPalette.teal, lineWidth: 1)
+                .stroke(OmoColor.primary, lineWidth: 1)
         )
         .shadow(
             color: rarityColor(card.rarity).opacity(depth == 1 ? 0.55 : 0.12),
@@ -84,10 +84,10 @@ private struct RecallKnowledgeCardView: View {
                 cornerRadius: RecallCardMetrics.cornerRadius,
                 style: .continuous
             )
-            .fill(RecallPalette.card)
+            .fill(OmoColor.surface)
             .overlay(
                 RoundedRectangle(cornerRadius: RecallCardMetrics.cornerRadius)
-                    .stroke(RecallPalette.teal, lineWidth: 1)
+                    .stroke(OmoColor.primary, lineWidth: 1)
             )
             .shadow(color: Color.black.opacity(0.22), radius: 4, x: 3, y: 5)
 
@@ -97,7 +97,7 @@ private struct RecallKnowledgeCardView: View {
                 Button { showsContext = true } label: {
                     Image(systemName: "line.3.horizontal")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(RecallPalette.teal)
+                        .foregroundStyle(OmoColor.primary)
                         .frame(width: 44, height: 44)
                         .contentShape(Rectangle())
                 }
@@ -135,7 +135,7 @@ private struct RecallKnowledgeCardView: View {
             ForEach(Array(inlineUnits(segments.prefix).enumerated()), id: \.offset) { _, unit in
                 Text(unit)
                     .font(.system(size: fontSize))
-                    .foregroundStyle(RecallPalette.ink)
+                    .foregroundStyle(OmoColor.textPrimary)
             }
 
             ScratchSemanticToken(
@@ -148,7 +148,7 @@ private struct RecallKnowledgeCardView: View {
             ForEach(Array(inlineUnits(segments.suffix).enumerated()), id: \.offset) { _, unit in
                 Text(unit)
                     .font(.system(size: fontSize))
-                    .foregroundStyle(RecallPalette.ink)
+                    .foregroundStyle(OmoColor.textPrimary)
             }
         }
         .fixedSize(horizontal: false, vertical: true)
@@ -255,7 +255,7 @@ private struct ScratchSemanticToken: View {
                     let rendered = context.resolve(
                         Text(text)
                             .font(.system(size: fontSize, weight: .semibold))
-                            .foregroundStyle(RecallPalette.coral)
+                            .foregroundStyle(OmoColor.accent)
                     )
                     context.draw(
                         rendered,
@@ -272,7 +272,7 @@ private struct ScratchSemanticToken: View {
                                 roundedRect: CGRect(origin: .zero, size: size),
                                 cornerRadius: size.height / 2
                             ),
-                            with: .color(RecallPalette.tealSoft)
+                            with: .color(OmoColor.primarySoft)
                         )
                         context.blendMode = .destinationOut
                         for normalizedPath in paths where normalizedPath.count > 1 {
