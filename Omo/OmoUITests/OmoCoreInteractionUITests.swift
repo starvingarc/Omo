@@ -81,6 +81,34 @@ final class OmoCoreInteractionUITests: XCTestCase {
         attachScreenshot("07-recall-scratch", app: app)
     }
 
+    func testIdleHomeInvitesUserToDrawCards() {
+        let app = launch(arguments: ["-OmoLibraryFixture", "many"])
+
+        XCTAssertTrue(app.staticTexts["点我抽卡"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["哦莫 记忆伙伴"].exists)
+    }
+
+    func testHomeMenuAndLibraryBackShareTheSameTopLeadingFrame() {
+        let app = launch(arguments: ["-OmoLibraryFixture", "empty"])
+
+        let menu = app.buttons["omo-nav-menu"]
+        XCTAssertTrue(menu.waitForExistence(timeout: 3))
+        let menuFrame = menu.frame
+
+        XCTAssertTrue(
+            tapAndWait(
+                app.buttons["打开知识库"],
+                destination: app.buttons["omo-nav-back"]
+            )
+        )
+        let backFrame = app.buttons["omo-nav-back"].frame
+
+        XCTAssertEqual(menuFrame.minX, backFrame.minX, accuracy: 1)
+        XCTAssertEqual(menuFrame.minY, backFrame.minY, accuracy: 1)
+        XCTAssertEqual(menuFrame.size.width, backFrame.size.width, accuracy: 1)
+        XCTAssertEqual(menuFrame.size.height, backFrame.size.height, accuracy: 1)
+    }
+
     func testRevealedRecallShowsRatingWithoutHidingPersistentActions() {
         let app = launch(arguments: [
             "-OmoLibraryFixture", "many",

@@ -1,8 +1,19 @@
 import SwiftUI
 
+/// Shared 402pt reference-canvas placement for top-leading page navigation.
+/// The control itself is 53pt; this frame keeps it inside the status-bar safe region
+/// and aligned to the app-wide 24pt page inset on every illustrated surface.
+enum OmoPageChromeMetrics {
+    static let topLeadingControlFrame = CGRect(
+        x: OmoSpacing.pageInset,
+        y: 60,
+        width: OmoControlMetrics.topIconButtonSize,
+        height: OmoControlMetrics.topIconButtonSize
+    )
+}
+
 enum RecallHomeMetrics {
     static let referenceSize = CGSize(width: 402, height: 874)
-    static let menuFrame = CGRect(x: 25, y: 43, width: 70, height: 70)
     static let mascotFrame = CGRect(x: 209, y: 105, width: 170, height: 170)
     static let panelFrame = CGRect(x: 13, y: 265, width: 376, height: 588)
     static let promptFrame = CGRect(x: 78, y: 476, width: 246, height: 54)
@@ -10,7 +21,8 @@ enum RecallHomeMetrics {
     static let folderFrame = CGRect(x: 6, y: 623, width: 220, height: 220)
     static let uploadFrame = CGRect(x: 296, y: 733, width: 70, height: 73)
     static let uploadArrowFrame = CGRect(x: 249, y: 587, width: 90, height: 100)
-    static let mascotArrowFrame = CGRect(x: 193, y: 168, width: 90, height: 105)
+    static let mascotArrowFrame = CGRect(x: 176, y: 190, width: 90, height: 105)
+    static let mascotPromptFrame = CGRect(x: 166, y: 306, width: 110, height: 28)
     static let cardStackFrame = CGRect(x: 70, y: 322, width: 262, height: 184)
     static let ratingFrame = CGRect(x: 58, y: 536, width: 286, height: 82)
     static let errorFrame = CGRect(x: 88, y: 622, width: 226, height: 44)
@@ -41,13 +53,11 @@ enum RecallRatingMetrics {
 
 enum KnowledgeLibraryMetrics {
     static let referenceSize = CGSize(width: 402, height: 874)
-    static let backFrame = CGRect(x: 21, y: 43, width: 70, height: 70)
     static let mascotFrame = CGRect(x: 226, y: 32, width: 154, height: 154)
     static let panelFrame = CGRect(x: 13, y: 180, width: 376, height: 674)
     static let searchFrame = CGRect(x: 21, y: 166, width: 356, height: 76)
     static let pagerFrame = CGRect(x: 21, y: 258, width: 360, height: 466)
     static let pageIndicatorFrame = CGRect(x: 126, y: 735, width: 150, height: 32)
-    static let folderFrame = CGRect(x: 10, y: 735, width: 105, height: 105)
     static let uploadFrame = CGRect(x: 296, y: 752, width: 70, height: 73)
 
     static let columnSpacing: CGFloat = 18

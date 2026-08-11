@@ -124,6 +124,19 @@ struct RecallHomeView: View {
                     .frame(width: RecallHomeMetrics.mascotArrowFrame.width, height: RecallHomeMetrics.mascotArrowFrame.height)
                     .position(x: RecallHomeMetrics.mascotArrowFrame.midX, y: RecallHomeMetrics.mascotArrowFrame.midY)
                     .accessibilityHidden(true)
+
+                Text("点我抽卡")
+                    .font(OmoTypography.caption)
+                    .foregroundStyle(OmoColor.primary.opacity(0.78))
+                    .multilineTextAlignment(.center)
+                    .frame(
+                        width: RecallHomeMetrics.mascotPromptFrame.width,
+                        height: RecallHomeMetrics.mascotPromptFrame.height
+                    )
+                    .position(
+                        x: RecallHomeMetrics.mascotPromptFrame.midX,
+                        y: RecallHomeMetrics.mascotPromptFrame.midY
+                    )
             }
 
             statusText
@@ -314,6 +327,7 @@ private struct RecallHomeScaffold<Content: View>: View {
             }
             .animation(reduceMotion ? nil : .spring(response: 0.32, dampingFraction: 0.88), value: drawerIsOpen)
         }
+        .ignoresSafeArea()
     }
 
     private var referenceCanvas: some View {
@@ -325,7 +339,10 @@ private struct RecallHomeScaffold<Content: View>: View {
                 .accessibilityHidden(true)
 
             OmoTopIconButton(kind: .menu) { drawerIsOpen = true }
-            .position(x: RecallHomeMetrics.menuFrame.midX, y: RecallHomeMetrics.menuFrame.midY)
+            .position(
+                x: OmoPageChromeMetrics.topLeadingControlFrame.midX,
+                y: OmoPageChromeMetrics.topLeadingControlFrame.midY
+            )
 
             mascot
             content

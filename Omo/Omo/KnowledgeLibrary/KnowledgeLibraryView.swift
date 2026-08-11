@@ -108,8 +108,8 @@ struct KnowledgeLibraryView: View {
 
             OmoTopIconButton(kind: .back, action: onBack)
             .position(
-                x: KnowledgeLibraryMetrics.backFrame.midX,
-                y: KnowledgeLibraryMetrics.backFrame.midY
+                x: OmoPageChromeMetrics.topLeadingControlFrame.midX,
+                y: OmoPageChromeMetrics.topLeadingControlFrame.midY
             )
             .accessibilityHint("返回首页")
 
@@ -146,19 +146,6 @@ struct KnowledgeLibraryView: View {
                     x: KnowledgeLibraryMetrics.pagerFrame.midX,
                     y: KnowledgeLibraryMetrics.pagerFrame.midY
                 )
-
-            Image("FirstLaunchFolder")
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: KnowledgeLibraryMetrics.folderFrame.width,
-                    height: KnowledgeLibraryMetrics.folderFrame.height
-                )
-                .position(
-                    x: KnowledgeLibraryMetrics.folderFrame.midX,
-                    y: KnowledgeLibraryMetrics.folderFrame.midY
-                )
-                .accessibilityHidden(true)
 
             OmoCreateButton(
                 accessibilityLabel: "上传新的知识截屏",
